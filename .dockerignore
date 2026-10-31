@@ -6,9 +6,11 @@ reports
 dist
 .next
 .wrangler
-.openai
 .env*
 *.pem
 *.key
 playwright-report
 test-results
+# .openai/hosting.json é importado por vite.config.ts e contém apenas IDs de
+# projeto/binding (não segredos). Excluí-lo quebra o build dentro da imagem.
+!.openai/hosting.json
