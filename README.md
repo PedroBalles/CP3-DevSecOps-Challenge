@@ -1,10 +1,10 @@
 # Casa Digital Segura — Pipeline DevSecOps
 
-[![DevSecOps](https://github.com/TiagoLouzaPetagna/Challenge-Leroy/actions/workflows/devsecops.yml/badge.svg)](https://github.com/TiagoLouzaPetagna/Challenge-Leroy/actions/workflows/devsecops.yml)
+[![DevSecOps](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/workflows/devsecops.yml/badge.svg)](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/workflows/devsecops.yml)
 
 Plataforma gamificada de conscientização sobre phishing para colaboradores da Leroy Merlin. Implementação da atividade **CP 03 — Pipeline DevSecOps** com GitHub Actions.
 
-> **Estado:** esteira e documentação preparadas; Gitleaks, Semgrep, Trivy fs, typecheck, build, testes e lint executados localmente com resultados registrados em [validação local](docs/validacao-local.md). **Ainda não houve** push, execução no Actions, imagem no GHCR, aprovação de Environment nem deploy em produção — o badge só refletirá a esteira depois disso.
+> **Estado:** esteira rodando no Actions. **7 das 8 etapas passam** na [execução 41235024506](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41235024506): Gitleaks, Semgrep, build, Trivy SCA, Docker/GHCR, Trivy imagem e ZAP. A etapa 8 (produção) está **bloqueada por falta das variables do Environment `producao`** — o gate funciona, falta a credencial Azure. Detalhes em [execuções reais](docs/evidencias/execucoes-actions.md).
 
 ## Integrantes
 
