@@ -25,8 +25,8 @@ jobs:
     - name: Escanear todo o histórico
       run: 'mkdir -p reports
 
-        gitleaks git --redact --log-opts=''--all'' --report-format json --report-path reports/gitleaks.json --exit-code
-        1 .
+        gitleaks git --redact --log-opts=''--all'' --report-format json --report-path
+        reports/gitleaks.json --exit-code 1 .
 
         '
     - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -49,8 +49,9 @@ jobs:
     - name: Analisar código com regras versionadas
       run: 'mkdir -p reports
 
-        docker run --rm -v "$PWD:/src" -w /src "semgrep/semgrep:$SEMGREP_VERSION" semgrep scan --config p/default
-        --config p/owasp-top-ten --config .semgrep.yml --error --strict --metrics off --json --output reports/semgrep.json
+        docker run --rm -v "$PWD:/src" -w /src "semgrep/semgrep:$SEMGREP_VERSION"
+        semgrep scan --config p/default --config p/owasp-top-ten --config .semgrep.yml
+        --error --strict --metrics off --json --output reports/semgrep.json
 
         '
     - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -94,7 +95,10 @@ jobs:
     - name: Separa achados de runtime dos de build
       run: 'set -o pipefail
 
-        node -e "const a=require(\"./reports/npm-audit.json\"),p=require(\"./reports/npm-audit-producao.json\");const f=o=>o.metadata.vulnerabilities;const t=f(p);console.log(\"producao: critical=\",t.critical,\"high=\",t.high,\"moderate=\",t.moderate);console.log(\"todos   : critical=\",f(a).critical,\"high=\",f(a).high,\"moderate=\",f(a).moderate);" | tee reports/npm-audit-escopo.txt'
+        node -e "const a=require(\"./reports/npm-audit.json\"),p=require(\"./reports/npm-audit-producao.json\");const
+        f=o=>o.metadata.vulnerabilities;const t=f(p);console.log(\"producao: critical=\",t.critical,\"high=\",t.high,\"moderate=\",t.moderate);console.log(\"todos   :
+        critical=\",f(a).critical,\"high=\",f(a).high,\"moderate=\",f(a).moderate);"
+        | tee reports/npm-audit-escopo.txt'
     - name: Tipos, build e testes
       run: 'set -o pipefail
 
@@ -135,11 +139,12 @@ jobs:
     - name: Relatórios completos e gate HIGH/CRITICAL
       run: 'mkdir -p reports
 
-        trivy fs --scanners vuln,misconfig,secret --include-dev-deps --skip-dirs .git --skip-dirs reports --format
-        table --output reports/trivy-fs.txt .
+        trivy fs --scanners vuln,misconfig,secret --include-dev-deps --skip-dirs .git
+        --skip-dirs reports --format table --output reports/trivy-fs.txt .
 
-        trivy fs --scanners vuln,misconfig,secret --include-dev-deps --skip-dirs .git --skip-dirs reports --severity
-        HIGH,CRITICAL --format json --output reports/trivy-fs.json --exit-code 1 .'
+        trivy fs --scanners vuln,misconfig,secret --include-dev-deps --skip-dirs .git
+        --skip-dirs reports --severity HIGH,CRITICAL --format json --output reports/trivy-fs.json
+        --exit-code 1 .'
     - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
       if: always()
       with:
@@ -150,7 +155,8 @@ jobs:
   docker-build:
     name: 5 - Docker build + push GHCR
     needs: sca
-    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' 
+      || github.ref == 'refs/heads/master')
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     permissions:
@@ -185,8 +191,9 @@ jobs:
         provenance: true
         sbom: true
     - name: Registrar imagem, digest e manifesto
-      run: 'printf "# Docker build\nImagem: %s:%s\nDigest: %s\nExecução: %s/%s/actions/runs/%s\n" "$IMAGE" "$COMMIT"
-        "$DIGEST" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > reports/docker-build.md
+      run: 'printf "# Docker build\nImagem: %s:%s\nDigest: %s\nExecução: %s/%s/actions/runs/%s\n"
+        "$IMAGE" "$COMMIT" "$DIGEST" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID"
+        > reports/docker-build.md
 
         docker buildx imagetools inspect "$IMAGE@$DIGEST" > reports/manifesto.txt'
       env:
@@ -220,10 +227,11 @@ jobs:
     - name: Relatórios e gate HIGH/CRITICAL com correção
       run: 'mkdir -p reports
 
-        trivy image --scanners vuln --format table --output reports/trivy-image.txt "$IMAGE@$DIGEST"
+        trivy image --scanners vuln --format table --output reports/trivy-image.txt
+        "$IMAGE@$DIGEST"
 
-        trivy image --scanners vuln --severity HIGH,CRITICAL --ignore-unfixed --format json --output reports/trivy-image.json
-        --exit-code 1 "$IMAGE@$DIGEST"'
+        trivy image --scanners vuln --severity HIGH,CRITICAL --ignore-unfixed --format
+        json --output reports/trivy-image.json --exit-code 1 "$IMAGE@$DIGEST"'
       env:
         IMAGE: ${{ needs.docker-build.outputs.image }}
         DIGEST: ${{ needs.docker-build.outputs.digest }}
@@ -257,7 +265,8 @@ jobs:
 
         docker run -d --name app -p 127.0.0.1:3000:3000 "$IMAGE@$DIGEST"
 
-        curl --fail --retry 30 --retry-all-errors --retry-delay 2 http://127.0.0.1:3000/api/health -o /dev/null
+        curl --fail --retry 30 --retry-all-errors --retry-delay 2 http://127.0.0.1:3000/api/health
+        -o /dev/null
 
         '
     - name: ZAP baseline (somente alvo efêmero da equipe)
@@ -295,7 +304,7 @@ jobs:
         retention-days: 14
     environment: homologacao
   deploy-prod:
-    name: 8 - Aprovação humana + produção Azure
+    name: 8 - Aprovação humana + produção Render
     needs:
     - docker-build
     - dast-staging
@@ -303,7 +312,6 @@ jobs:
     timeout-minutes: 25
     permissions:
       contents: read
-      id-token: write
     environment:
       name: producao
       url: ${{ vars.DEPLOY_URL }}
@@ -311,37 +319,29 @@ jobs:
     - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       with:
         persist-credentials: false
-    - name: Validar configuração antes de autenticar
+    - name: Validar configuração antes de implantar
       env:
-        AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
-        AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
-        AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-        AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
-        AZURE_WEBAPP_NAME: ${{ vars.AZURE_WEBAPP_NAME }}
+        RENDER_SERVICE_ID: ${{ vars.RENDER_SERVICE_ID }}
         DEPLOY_URL: ${{ vars.DEPLOY_URL }}
-      run: "set -euo pipefail\nfor NAME in AZURE_CLIENT_ID AZURE_TENANT_ID AZURE_SUBSCRIPTION_ID AZURE_RESOURCE_GROUP\
-        \ AZURE_WEBAPP_NAME DEPLOY_URL; do\n  test -n \"${!NAME}\" || { echo \"Variável obrigatória ausente: $NAME\"\
-        ; exit 1; }\ndone\n[[ \"$DEPLOY_URL\" =~ ^https://[a-zA-Z0-9.-]+/?$ ]]\n"
-    - uses: azure/login@7184910d9eb2b1c5e48f7073824a90609bb9b6d6
-      with:
-        client-id: ${{ vars.AZURE_CLIENT_ID }}
-        tenant-id: ${{ vars.AZURE_TENANT_ID }}
-        subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-    - name: Implantar por digest (GHCR deve ser público)
+        RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+      run: "bash scripts/ci/validar-render.sh"
+    - name: Disparar deploy da imagem por digest
       env:
-        RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
-        WEBAPP_NAME: ${{ vars.AZURE_WEBAPP_NAME }}
+        RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        RENDER_SERVICE_ID: ${{ vars.RENDER_SERVICE_ID }}
         IMAGE: ${{ needs.docker-build.outputs.image }}
         DIGEST: ${{ needs.docker-build.outputs.digest }}
-      run: 'set -euo pipefail
+      run: 'mkdir -p reports
 
-        az webapp config appsettings set --resource-group "$RESOURCE_GROUP" --name "$WEBAPP_NAME" --settings WEBSITES_PORT=3000
-        PORT=3000 > /dev/null
+        IMAGE_URL="$IMAGE@$DIGEST"
 
-        az webapp config container set --resource-group "$RESOURCE_GROUP" --name "$WEBAPP_NAME" --container-image-name
-        "$IMAGE@$DIGEST" --container-registry-url https://ghcr.io > /dev/null
+        echo "Imagem: $IMAGE_URL"
 
-        az webapp restart --resource-group "$RESOURCE_GROUP" --name "$WEBAPP_NAME"
+        curl -sS -X POST "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys"
+        \ -H "Authorization: Bearer $RENDER_API_KEY" \ -H "Content-Type: application/json"
+        \ -d "{\"imageUrl\":\"$IMAGE_URL\"}" \ -o reports/render-deploy.json --fail-with-body
+
+        jq -r "\"deploy id: \(.id) | status: \(.status)\"" reports/render-deploy.json
 
         '
     - name: Health check e confirmação de revisão
@@ -351,24 +351,19 @@ jobs:
         DIGEST: ${{ needs.docker-build.outputs.digest }}
       run: 'mkdir -p reports
 
-        curl --fail --retry 30 --retry-all-errors --retry-delay 10 "$DEPLOY_URL/api/health" -o reports/health.json
+        curl --fail --retry 40 --retry-all-errors --retry-delay 15 "$DEPLOY_URL/api/health"
+        -o reports/health.json
 
-        python3 -c ''import json,os; d=json.load(open("reports/health.json")); assert d.get("status")=="ok" and
-        d.get("revision")==os.environ["GITHUB_SHA"], "Revisão servida difere do commit aprovado"''
+        python3 -c ''import json,os; d=json.load(open("reports/health.json")); assert
+        d.get("status")=="ok" and d.get("revision")==os.environ["GITHUB_SHA"], "Revisão
+        servida difere do commit aprovado" ''
 
-        printf ''# Deploy produção\nImagem: %s@%s\nURL: %s\nAcionado por: %s\nData UTC: %s\nExecução: %s/%s/actions/runs/%s\nAprovação:
-        consultar deployment review do Environment producao na execução.\n'' "$IMAGE" "$DIGEST" "$DEPLOY_URL" "$GITHUB_ACTOR"
-        "$(date -u +%FT%TZ)" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > reports/deploy-producao.md'
-    - name: Registrar estado da etapa 8 mesmo em bloqueio
-      if: always()
-      run: bash scripts/ci/registrar-producao.sh
-    - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-      if: always()
-      with:
-        name: relatorio-08-producao
-        path: reports/
-        if-no-files-found: error
-        retention-days: 14
+        printf ''# Deploy produção (Render)\nProvedor: Render / plano Free\nImagem:
+        %s@%s\nURL: %s\nAcionado por: %s\nData UTC: %s\nExecução: %s/%s/actions/runs/%s\nAprovação:
+        consultar deployment review do Environment producao na execução.\n'' "$IMAGE"
+        "$DIGEST" "$DEPLOY_URL" "$GITHUB_ACTOR" "$(date -u +%FT%TZ)" "$GITHUB_SERVER_URL"
+        "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > reports/deploy-producao.md'
+
   resumo:
     name: ★ Resumo da Esteira (sempre)
     if: ${{ always() }}
@@ -413,7 +408,7 @@ jobs:
     branches:
     - main
     - master
-  workflow_dispatch: null
+  workflow_dispatch:
 defaults:
   run:
     shell: bash

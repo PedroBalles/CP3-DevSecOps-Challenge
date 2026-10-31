@@ -4,7 +4,7 @@
 
 Plataforma gamificada de conscientização sobre phishing para colaboradores da Leroy Merlin. Implementação da atividade **CP 03 — Pipeline DevSecOps** com GitHub Actions.
 
-> **Estado:** esteira rodando no Actions. **7 das 8 etapas passam** na [execução 41235024506](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41235024506): Gitleaks, Semgrep, build, Trivy SCA, Docker/GHCR, Trivy imagem e ZAP. A etapa 8 (produção) está **bloqueada por falta das variables do Environment `producao`** — o gate funciona, falta a credencial Azure. Detalhes em [execuções reais](docs/evidencias/execucoes-actions.md).
+> **Estado:** esteira rodando no Actions. **7 das 8 etapas passam** na [execução 41235024506](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41235024506): Gitleaks, Semgrep, build, Trivy SCA, Docker/GHCR, Trivy imagem e ZAP. A etapa 8 (produção) está **bloqueada por falta das variables do Environment `producao`** — o gate funciona, falta a credencial do Render. Detalhes em [execuções reais](docs/evidencias/execucoes-actions.md).
 
 ## Integrantes
 
@@ -25,7 +25,7 @@ flowchart LR
   E --> F[6 Trivy imagem]
   F --> G[7 Homologação / ZAP]
   G --> H{Revisor producao}
-  H --> I[8 Produção Azure]
+  H --> I[8 Produção Render]
   I --> J[Resumo sempre]
 ```
 
@@ -38,7 +38,7 @@ flowchart LR
 | 5 | Docker Buildx: imagem multi-stage não-root e push pelo SHA | `relatorio-05-docker-build` |
 | 6 | Trivy image: HIGH/CRITICAL com correção bloqueiam | `relatorio-06-trivy-image` |
 | 7 | ZAP baseline: análise informativa do contêiner em homologação | `relatorio-07-homologacao-zap` |
-| 8 | Environment `producao`, aprovação e Azure OIDC por digest | `relatorio-08-producao` |
+| 8 | Environment `producao`, aprovação e deploy no Render por digest | `relatorio-08-producao` |
 | ★ | Consolidação de status e contagens, inclusive em falha | `resumo-da-esteira` |
 
 **Relatórios mais recentes:** abrir [histórico da esteira](https://github.com/TiagoLouzaPetagna/Challenge-Leroy/actions/workflows/devsecops.yml), escolher a execução e baixar os artifacts acima. O link específico de cada artifact será inserido depois que existir uma execução real.
@@ -52,7 +52,7 @@ flowchart LR
 | 3 Build | `tsc --noEmit` 0 erros, build ok, 39 testes passando, lint limpo |
 | 4 Trivy fs | 5 CRITICAL + 14 HIGH corrigidos por upgrade → 0 (nenhuma supressão) |
 | 4b `npm audit` | produção (`--omit=dev`): 0 em todas as severidades; 11 high restantes são só de build/teste |
-| 5–8 | Não executados: exigem Docker/GHCR/Azure, indisponíveis no ambiente local |
+| 5–8 | Executados no Actions; 8 bloqueada por credencial do Render ausente |
 
 Detalhes, comandos e saídas em [validação local](docs/validacao-local.md).
 
@@ -91,15 +91,15 @@ Não passar credenciais em ARG/ENV versionados ou comandos compartilhados. Porta
 
 1. Publicar os arquivos deste pacote no repositório; manter `package-lock.json` versionado.
 2. Criar GitHub Environments **`homologacao`** e **`producao`**. Em `producao`, habilitar Required reviewers (mínimo 1), impedir autoaprovação quando possível e restringir à `main` ou `master`. **Sem isso, YAML não garante aprovação humana.**
-3. Configurar Azure App Service Linux e identidade OIDC com acesso limitado ao Web App. Preencher as variables do Environment descritas em [docs/pipeline.md](docs/pipeline.md).
-4. Permitir publicação de pacotes pelo workflow. Após o primeiro push, tornar a imagem GHCR pública para pull pelo Azure, conforme o procedimento documentado.
+3. Criar o Web Service no Render (Existing Image, plano Free) e preencher `RENDER_SERVICE_ID`, `DEPLOY_URL` e o secret `RENDER_API_KEY` no Environment `producao`, conforme [docs/pipeline.md](docs/pipeline.md).
+4. Permitir publicação de pacotes pelo workflow e manter o pacote GHCR público, para o Render puxar sem credencial.
 5. Executar a esteira em `main` ou `master`, corrigir achados reais sem ignorá-los em massa e revisar os artifacts.
 6. Demonstrar bloqueio/correção num PR de teste SAST, conforme o procedimento seguro em `docs/pipeline.md`.
 7. Registrar aprovador/data, URL de produção e prints genuínos em [docs/evidencias](docs/evidencias/README.md). Preencher nome/RM e garantir contribuições individuais reais.
 
 ### Aprovação e produção — registro obrigatório
 
-- Execução completa bem-sucedida: **pendente** (depende de push e conta Azure).
+- Execução completa bem-sucedida: **pendente** (depende das variables do Render).
 - Execução bloqueada e correção: **demonstrada localmente** — gate Semgrep exit 1 com `eval`, exit 0 após correção ([evidência](docs/validacao-local.md)); bloqueio no Actions ainda pendente.
 - Quem aprovou / data / relatórios consultados: **pendente**; fonte: deployment review do Environment `producao`.
 - URL de produção: **pendente**.
@@ -108,7 +108,7 @@ Não passar credenciais em ARG/ENV versionados ou comandos compartilhados. Porta
 
 ## Documentação
 
-- [Oito etapas e configuração Azure](docs/pipeline.md)
+- [Oito etapas e configuração Render](docs/pipeline.md)
 - [Achados, decisões e lições aprendidas](docs/observacoes.md)
 - [Validação local e impedimentos](docs/validacao-local.md)
 - [Checklist de evidências](docs/evidencias/README.md) e [relatórios locais reais](docs/evidencias/relatorios-locais/LEIA-ME.md)

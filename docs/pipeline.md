@@ -7,7 +7,7 @@ Fonte: https://github.com/TiagoLouzaPetagna/Challenge-Leroy
 Base analisada: `82a7d12293ced7c32dc90e119f2093d0ccb07b18`.
 Requisitos: PDF “CP 03 - Pipeline DevSecOps”, páginas 3–13.
 
-Esta entrega implementa a configuração local. **Não representa uma execução concluída do Actions, publicação de imagem ou deploy.** Os registros reais devem ser incluídos após configurar GitHub e Azure.
+Esta entrega implementa a configuração local. **Não representa uma execução concluída do Actions, publicação de imagem ou deploy.** Os registros reais estão em execucoes-actions.md, gerados a partir das execuções no GitHub Actions.
 
 ## Fluxo
 
@@ -20,7 +20,7 @@ flowchart LR
   E --> F[6 Trivy image]
   F --> G[7 Homologação + ZAP]
   G --> H{Revisor do Environment producao}
-  H --> I[8 Azure App Service]
+  H --> I[8 Render]
   I --> J[Resumo sempre]
 ```
 
@@ -35,7 +35,7 @@ O job `resumo` depende das oito etapas e usa `always()`. Coleta status reais de 
 | 5 | `docker-build` / Buildx + GHCR | Build ou push com erro bloqueiam | `relatorio-05-docker-build` |
 | 6 | `image-scan` / Trivy image | HIGH/CRITICAL **com correção disponível** bloqueiam (`--ignore-unfixed`) | `relatorio-06-trivy-image` |
 | 7 | `dast-staging` / ZAP 2.17.0 | Alertas informativos; erros operacionais/JSON ausente bloqueiam | `relatorio-07-homologacao-zap` |
-| 8 | `deploy-prod` / Environment + Azure OIDC | Revisor obrigatório; falha de deploy, saúde ou revisão servida bloqueia | `relatorio-08-producao` |
+| 8 | `deploy-prod` / Environment + Render API | Revisor obrigatório; falha de deploy, saúde ou revisão servida bloqueia | `relatorio-08-producao` |
 | ★ | `resumo` / Python | Executa mesmo quando etapas anteriores falham | `resumo-da-esteira` |
 
 ### Triggers e permissões
@@ -52,7 +52,7 @@ O job `resumo` depende das oito etapas e usa `always()`. Coleta status reais de 
 
 O projeto original usa Vinext/Vite para desenvolvimento e build. Mantido `npm run build` para verificar esse caminho e os testes de HTML existentes. O contêiner usa `next build --webpack` com `output: standalone`, compatível com os componentes React e rotas App Router, evitando executar um servidor de desenvolvimento em produção. Dependências de desenvolvimento não são copiadas integralmente para o runtime; apenas tracing standalone, assets e arquivos públicos.
 
-A configuração opcional Cloudflare D1 do projeto original não é usada pela interface atual; o deploy Azure não fornece D1. Se alguma funcionalidade passar a depender de `getDb()`, adaptar o backend antes de promover. Os headers `X-ChatGPT-*` do template **não constituem autenticação confiável na Internet**; não habilitar autorização baseada neles fora do gateway original.
+A configuração opcional Cloudflare D1 do projeto original não é usada pela interface atual; o deploy no Render não fornece D1. Se alguma funcionalidade passar a depender de `getDb()`, adaptar o backend antes de promover. Os headers `X-ChatGPT-*` do template **não constituem autenticação confiável na Internet**; não habilitar autorização baseada neles fora do gateway original.
 
 O Dockerfile é multi-stage, imagem slim, usuário `node`, porta 3000 e health check `/api/health`. `APP_REVISION` contém somente o SHA público, não credenciais. A rota de saúde informa a revisão; o deploy compara-a ao SHA esperado para não confundir uma versão antiga saudável com a entrega nova.
 
@@ -78,31 +78,37 @@ Três pontos foram corrigidos após execução real, e todos mudavam o veredito 
 
 A aprovação é controlada por **Settings → Environments → producao → Required reviewers**; YAML sozinho não impõe um revisor. Configurar ao menos uma pessoa, impedir autoaprovação quando disponível e restringir branches a `main`. Conferir se o plano do GitHub permite essa proteção em repositório público. O responsável da execução (`github.actor`) não é necessariamente o aprovador; o relatório aponta para o deployment review, que é a fonte do nome/data reais.
 
-## Deploy real: Azure App Service Linux (contêiner)
+## Deploy real: Render (plano Free)
 
-Pré-requisitos: assinatura Azure, resource group, App Service Plan Linux e Web App compatível com contêineres. Recursos têm custo; criação não foi executada nesta entrega.
+O enunciado aceita qualquer provedor de nuvem; Render foi escolhido por não exigir
+cartão de crédito e aceitar imagem pré-construída do GHCR.
+
+Pré-requisitos: conta Render (login com GitHub) e um Web Service do tipo
+**Existing Image** apontando para `ghcr.io/<owner>/<repo>@sha256:<digest>`.
+O pacote GHCR precisa ser público para o Render puxar sem credencial.
 
 1. Criar Environments `homologacao` e `producao` no repositório.
-2. Configurar revisores de `producao`, limitar a `main` e verificar a proteção antes do primeiro deploy.
-3. Criar aplicação/identidade no Microsoft Entra ID e credencial federada OIDC com subject `repo:<owner>/<repo>:environment:producao`, issuer `https://token.actions.githubusercontent.com`, audience `api://AzureADTokenExchange`.
-4. Conceder à identidade somente permissão necessária de configuração/restart no Web App alvo (por exemplo Website Contributor, escopo no recurso, não Owner da assinatura).
-5. Criar variables no Environment `producao`:
+2. Configurar revisores obrigatórios em `producao` — sem isso o job 8 não espera
+   aprovação e o controle de mudança não existe.
+3. Criar o Web Service no Render com a imagem por digest e plano **Free**.
+4. Preencher o Environment `producao`:
 
-| Variável | Valor esperado |
-|---|---|
-| `AZURE_CLIENT_ID` | Client ID da identidade federada |
-| `AZURE_TENANT_ID` | Tenant ID |
-| `AZURE_SUBSCRIPTION_ID` | Assinatura |
-| `AZURE_RESOURCE_GROUP` | Resource group existente |
-| `AZURE_WEBAPP_NAME` | Web App Linux existente |
-| `DEPLOY_URL` | URL HTTPS pública do **Web App do grupo**, sem caminho/query |
+| Nome | Tipo | Valor |
+|---|---|---|
+| `RENDER_SERVICE_ID` | variable | `srv-...` (está na URL do serviço no dashboard) |
+| `DEPLOY_URL` | variable | `https://<servico>.onrender.com`, sem caminho |
+| `RENDER_API_KEY` | **secret** | chave criada em Account Settings → API Keys |
 
-Esses IDs são identificadores, não segredos. OIDC dispensa client secret. Se outro provedor exigir credenciais, armazená-las em **Environment secrets** e nunca em código.
+O workflow dispara `POST /v1/services/{id}/deploys` com `imageUrl` contendo o
+digest imutável da etapa 5, e depois valida `/api/health` conferindo que a
+revisão servida é o commit aprovado.
 
-6. Após o primeiro push, tornar o pacote GHCR público (Packages → Package settings → Change visibility). O Azure precisa conseguir puxar a imagem; o workflow deliberadamente não distribui PATs. Se a política exigir pacote privado, configurar credencial de leitura no Web App por canal seguro, antes de usar esse modelo.
-7. Habilitar HTTPS-only no Web App. O workflow configura `WEBSITES_PORT=3000`, implanta `imagem@digest`, reinicia e verifica `/api/health` e o SHA.
-8. Revisor baixa relatórios 1–7 e registra a decisão. Só então aprova o job 8.
-9. Em falha após deploy, inspecionar logs do App Service. Rollback: reimplantar o digest anteriormente aprovado; não há rollback automático nesta versão.
+Limitação do plano Free: a instância suspende após período de inatividade. O
+primeiro request depois disso pode demorar ~50s; o health check usa
+`--retry 40 --retry-delay 15` para tolerar o cold start.
+
+Rollback: disparar novo deploy apontando para o digest anteriormente aprovado.
+Não há rollback automático nesta versão.
 
 ## Demonstração de bloqueio sem contaminar main
 

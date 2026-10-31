@@ -5,7 +5,7 @@
 Código, esteira e documentação preparados sobre `82a7d12`, com execuções locais reais
 registradas em [validacao-local.md](validacao-local.md). **Ainda não há execução no
 GitHub Actions, imagem no GHCR, aprovação de Environment nem deploy em produção** —
-esses pontos dependem de push no repositório e de conta Azure, e estão marcados como
+esses pontos dependem das variables do Environment `producao` no Render, e estão marcados como
 pendentes nas seções abaixo. Nenhum print foi fabricado.
 
 ## Registro de achados
@@ -110,6 +110,15 @@ Falha de scanner, falta de JSON ou ausência de alvo não são tratadas como suc
 - URL produção: **pendente**.
 - Commit/digest promovidos: **pendente**.
 
+## Provedor de nuvem
+
+A versão inicial usava Azure App Service com OIDC. Foi descartado por exigir
+cartão de crédito e configuração de identidade federada no Entra ID, sem ganho
+para o escopo avaliado. A etapa 8 foi reescrita para Render (plano Free, imagem
+pré-construída do GHCR), mantendo intactos o gate de aprovação humana, o deploy
+por digest imutável e a verificação de revisão via `/api/health`. O enunciado
+permite qualquer provedor; o que se avalia é o deploy real e rastreável.
+
 ## Lições aprendidas / observações técnicas
 
 1. **A ferramenta de supressão pode ser o próprio falso negativo.** O `.gitleaksignore`
@@ -147,6 +156,11 @@ Falha de scanner, falta de JSON ou ausência de alvo não são tratadas como suc
     commits que o clone raso não tinha. Corrigido com `git fetch --unshallow`; a verificação
     é `git rev-parse --is-shallow-repository` e conferir se cada commit citado no ignore
     resolve com `git cat-file -t`. Por isso `actions/checkout` usa `fetch-depth: 0`.
-13. **Duração do pipeline remoto e taxa de falsos positivos ainda não foram medidas.**
+13. **`--strict` transforma erro de parse em "falha de segurança".** O Semgrep saiu com exit 2
+    e 0 achados na etapa 2. A mensagem parecia vulnerabilidade; o `errors[]` do JSON mostrava
+    `Internal matching error` no próprio `devsecops.yml`, porque a chave `on:` do GitHub
+    Actions é lida como booleano no dialeto YAML 1.1. Ler `results[]` e `errors[]` separadamente
+    evitou caçar um problema de segurança que não existia.
+14. **Duração do pipeline remoto e taxa de falsos positivos ainda não foram medidas.**
     Após executar no Actions, registrar duração por job e ocorrências reais, sem atribuir
     medições à equipe antecipadamente.

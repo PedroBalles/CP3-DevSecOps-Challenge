@@ -1,7 +1,7 @@
 # Validação local — o que realmente foi executado
 
 Registro das execuções verificáveis nesta máquina, com valores observados.
-O que depende de Docker, GHCR ou Azure **não** foi executado (ver seção final).
+O que dependia de Docker e GHCR **foi executado no GitHub Actions** (etapas 5 e 6). O deploy de produção usa Render e depende das variables do Environment.
 
 Data das execuções: 2026-10-31.
 Base: branch `master`, commit `82a7d12`.
@@ -186,7 +186,7 @@ nunca virou zero.
 | 5 — Docker build + push GHCR | `docker`/`podman`/`buildah` ausentes, sem socket | Executar no Actions |
 | 6 — Trivy image | depende da imagem da etapa 5 | Executar no Actions |
 | 7 — ZAP baseline | depende do contêiner em homologação | Executar no Actions |
-| 8 — Deploy Azure + aprovação | exige conta Azure, OIDC e Environment com revisor | Executar no Actions |
+| 8 — Deploy Render + aprovação | exige `RENDER_SERVICE_ID`, `DEPLOY_URL`, `RENDER_API_KEY` e revisor no Environment | Bloqueada até configurar |
 
 O `Dockerfile` foi revisado estaticamente: multi-stage, imagem base fixada,
 `USER node`, health check e sem segredo em ARG/ENV — mas **o build da imagem não foi
