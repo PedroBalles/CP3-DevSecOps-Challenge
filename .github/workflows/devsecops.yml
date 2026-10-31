@@ -1,0 +1,401 @@
+name: DevSecOps - Casa Digital Segura
+permissions:
+  contents: read
+concurrency:
+  group: devsecops-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+env:
+  NODE_VERSION: 22.22.0
+  GITLEAKS_VERSION: 8.30.1
+  SEMGREP_VERSION: 1.183.0
+  TRIVY_VERSION: 0.76.1
+  ZAP_IMAGE: ghcr.io/zaproxy/zaproxy:2.17.0
+jobs:
+  secrets-scan:
+    name: 1 - Segredos (Gitleaks)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      with:
+        fetch-depth: 0
+        persist-credentials: false
+    - name: Instalar Gitleaks com checksum
+      run: bash scripts/ci/install-tools.sh gitleaks "$GITLEAKS_VERSION"
+    - name: Escanear todo o histórico
+      run: 'mkdir -p reports
+
+        gitleaks git --redact --log-opts=''--all'' --report-format json --report-path reports/gitleaks.json --exit-code
+        1 .
+
+        '
+    - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      if: always()
+      with:
+        name: relatorio-01-gitleaks
+        path: reports/
+        if-no-files-found: error
+        retention-days: 14
+  sast:
+    name: 2 - SAST (Semgrep)
+    needs: secrets-scan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+    - &id001
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      with:
+        persist-credentials: false
+    - name: Analisar código com regras versionadas
+      run: 'mkdir -p reports
+
+        docker run --rm -v "$PWD:/src" -w /src "semgrep/semgrep:$SEMGREP_VERSION" semgrep scan --config p/default
+        --config p/owasp-top-ten --config .semgrep.yml --error --strict --metrics off --json --output reports/semgrep.json
+
+        '
+    - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      if: always()
+      with:
+        name: relatorio-02-semgrep
+        path: reports/
+        if-no-files-found: error
+        retention-days: 14
+  build:
+    name: 3 - Build, dependências, testes e artefato
+    needs: sast
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+    - *id001
+    - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: npm
+    - name: Instalar dependências determinísticas
+      run: 'set -o pipefail
+
+        mkdir -p reports
+
+        npm ci --no-fund 2>&1 | tee reports/npm-ci.txt'
+    - name: Inventariar e auditar (auditoria informativa)
+      run: 'npm ls --all > reports/arvore-dependencias.txt 2>&1 || true
+
+        set +e
+
+        npm audit --json > reports/npm-audit.json
+
+        STATUS=$?
+
+        npm audit --omit=dev --json > reports/npm-audit-producao.json
+
+        set -e
+
+        if (( STATUS > 1 )); then exit "$STATUS"; fi'
+    - name: Separa achados de runtime dos de build
+      run: 'set -o pipefail
+
+        node -e "const a=require(\"./reports/npm-audit.json\"),p=require(\"./reports/npm-audit-producao.json\");const f=o=>o.metadata.vulnerabilities;const t=f(p);console.log(\"producao: critical=\",t.critical,\"high=\",t.high,\"moderate=\",t.moderate);console.log(\"todos   : critical=\",f(a).critical,\"high=\",f(a).high,\"moderate=\",f(a).moderate);" | tee reports/npm-audit-escopo.txt'
+    - name: Tipos, build e testes
+      run: 'set -o pipefail
+
+        mkdir -p reports
+
+        npx tsc --noEmit 2>&1 | tee reports/typecheck.txt
+
+        npm run build 2>&1 | tee reports/build.txt
+
+        npm run test:ci 2>&1 | tee reports/testes.txt
+
+        tar -czf "aplicacao-${GITHUB_SHA}.tar.gz" dist public package.json package-lock.json'
+    - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      with:
+        name: artefato-aplicacao-${{ github.sha }}
+        path: aplicacao-*.tar.gz
+        if-no-files-found: error
+        retention-days: 14
+    - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      if: always()
+      with:
+        name: relatorio-03-build
+        path: reports/
+        if-no-files-found: error
+        retention-days: 14
+  sca:
+    name: 4 - SCA Trivy (HIGH/CRITICAL)
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      with:
+        persist-credentials: false
+    - &id002
+      name: Instalar Trivy com checksum
+      run: bash scripts/ci/install-tools.sh trivy "$TRIVY_VERSION"
+    - name: Relatórios completos e gate HIGH/CRITICAL
+      run: 'mkdir -p reports
+
+        trivy fs --scanners vuln,misconfig,secret --include-dev-deps --skip-dirs .git --skip-dirs reports --format
+        table --output reports/trivy-fs.txt .
+
+        trivy fs --scanners vuln,misconfig,secret --include-dev-deps --skip-dirs .git --skip-dirs reports --severity
+        HIGH,CRITICAL --format json --output reports/trivy-fs.json --exit-code 1 .'
+    - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      if: always()
+      with:
+        name: relatorio-04-trivy-sca
+        path: reports/
+        if-no-files-found: error
+        retention-days: 14
+  docker-build:
+    name: 5 - Docker build + push GHCR
+    needs: sca
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image: ${{ steps.meta.outputs.image }}
+      digest: ${{ steps.push.outputs.digest }}
+    steps:
+    - *id001
+    - name: Preparar referência minúscula
+      run: 'mkdir -p reports
+
+        printf "image=ghcr.io/%s\n" "${REPOSITORY,,}" >> "$GITHUB_OUTPUT"'
+      id: meta
+      env:
+        REPOSITORY: ${{ github.repository }}
+    - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
+    - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Construir e publicar pelo commit
+      id: push
+      uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
+      with:
+        context: .
+        push: true
+        tags: ${{ steps.meta.outputs.image }}:${{ github.sha }}
+        build-args: APP_REVISION=${{ github.sha }}
+        provenance: true
+        sbom: true
+    - name: Registrar imagem, digest e manifesto
+      run: 'printf "# Docker build\nImagem: %s:%s\nDigest: %s\nExecução: %s/%s/actions/runs/%s\n" "$IMAGE" "$COMMIT"
+        "$DIGEST" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > reports/docker-build.md
+
+        docker buildx imagetools inspect "$IMAGE@$DIGEST" > reports/manifesto.txt'
+      env:
+        IMAGE: ${{ steps.meta.outputs.image }}
+        COMMIT: ${{ github.sha }}
+        DIGEST: ${{ steps.push.outputs.digest }}
+    - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      if: always()
+      with:
+        name: relatorio-05-docker-build
+        path: reports/
+        if-no-files-found: error
+        retention-days: 14
+  image-scan:
+    name: 6 - Trivy na imagem publicada
+    needs: docker-build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: read
+    steps:
+    - *id001
+    - &id003
+      uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - *id002
+    - name: Relatórios e gate HIGH/CRITICAL com correção
+      run: 'mkdir -p reports
+
+        trivy image --scanners vuln --format table --output reports/trivy-image.txt "$IMAGE@$DIGEST"
+
+        trivy image --scanners vuln --severity HIGH,CRITICAL --ignore-unfixed --format json --output reports/trivy-image.json
+        --exit-code 1 "$IMAGE@$DIGEST"'
+      env:
+        IMAGE: ${{ needs.docker-build.outputs.image }}
+        DIGEST: ${{ needs.docker-build.outputs.digest }}
+    - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      if: always()
+      with:
+        name: relatorio-06-trivy-image
+        path: reports/
+        if-no-files-found: error
+        retention-days: 14
+  dast-staging:
+    name: 7 - Homologação + ZAP informativo
+    needs:
+    - docker-build
+    - image-scan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: read
+    steps:
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      with:
+        persist-credentials: false
+    - *id003
+    - name: Subir a imagem imutável e aguardar saúde
+      env:
+        IMAGE: ${{ needs.docker-build.outputs.image }}
+        DIGEST: ${{ needs.docker-build.outputs.digest }}
+      run: 'mkdir -p reports
+
+        docker run -d --name app -p 127.0.0.1:3000:3000 "$IMAGE@$DIGEST"
+
+        curl --fail --retry 30 --retry-all-errors --retry-delay 2 http://127.0.0.1:3000/api/health -o /dev/null
+
+        '
+    - name: ZAP baseline (somente alvo efêmero da equipe)
+      run: bash scripts/ci/zap-baseline.sh http://127.0.0.1:3000 "$PWD/reports"
+    - name: Logs e limpeza
+      if: always()
+      run: 'mkdir -p reports
+
+        docker logs app > reports/app.log 2>&1 || true
+
+        docker rm -f app || true
+
+        '
+    - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      if: always()
+      with:
+        name: relatorio-07-homologacao-zap
+        path: reports/
+        if-no-files-found: error
+        retention-days: 14
+    environment: homologacao
+  deploy-prod:
+    name: 8 - Aprovação humana + produção Azure
+    needs:
+    - docker-build
+    - dast-staging
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      id-token: write
+    environment:
+      name: producao
+      url: ${{ vars.DEPLOY_URL }}
+    steps:
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      with:
+        persist-credentials: false
+    - name: Validar configuração antes de autenticar
+      env:
+        AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+        AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+        AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+        AZURE_WEBAPP_NAME: ${{ vars.AZURE_WEBAPP_NAME }}
+        DEPLOY_URL: ${{ vars.DEPLOY_URL }}
+      run: "set -euo pipefail\nfor NAME in AZURE_CLIENT_ID AZURE_TENANT_ID AZURE_SUBSCRIPTION_ID AZURE_RESOURCE_GROUP\
+        \ AZURE_WEBAPP_NAME DEPLOY_URL; do\n  test -n \"${!NAME}\" || { echo \"Variável obrigatória ausente: $NAME\"\
+        ; exit 1; }\ndone\n[[ \"$DEPLOY_URL\" =~ ^https://[a-zA-Z0-9.-]+/?$ ]]\n"
+    - uses: azure/login@7184910d9eb2b1c5e48f7073824a90609bb9b6d6
+      with:
+        client-id: ${{ vars.AZURE_CLIENT_ID }}
+        tenant-id: ${{ vars.AZURE_TENANT_ID }}
+        subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+    - name: Implantar por digest (GHCR deve ser público)
+      env:
+        RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+        WEBAPP_NAME: ${{ vars.AZURE_WEBAPP_NAME }}
+        IMAGE: ${{ needs.docker-build.outputs.image }}
+        DIGEST: ${{ needs.docker-build.outputs.digest }}
+      run: 'set -euo pipefail
+
+        az webapp config appsettings set --resource-group "$RESOURCE_GROUP" --name "$WEBAPP_NAME" --settings WEBSITES_PORT=3000
+        PORT=3000 > /dev/null
+
+        az webapp config container set --resource-group "$RESOURCE_GROUP" --name "$WEBAPP_NAME" --container-image-name
+        "$IMAGE@$DIGEST" --container-registry-url https://ghcr.io > /dev/null
+
+        az webapp restart --resource-group "$RESOURCE_GROUP" --name "$WEBAPP_NAME"
+
+        '
+    - name: Health check e confirmação de revisão
+      env:
+        DEPLOY_URL: ${{ vars.DEPLOY_URL }}
+        IMAGE: ${{ needs.docker-build.outputs.image }}
+        DIGEST: ${{ needs.docker-build.outputs.digest }}
+      run: 'mkdir -p reports
+
+        curl --fail --retry 30 --retry-all-errors --retry-delay 10 "$DEPLOY_URL/api/health" -o reports/health.json
+
+        python3 -c ''import json,os; d=json.load(open("reports/health.json")); assert d.get("status")=="ok" and
+        d.get("revision")==os.environ["GITHUB_SHA"], "Revisão servida difere do commit aprovado"''
+
+        printf ''# Deploy produção\nImagem: %s@%s\nURL: %s\nAcionado por: %s\nData UTC: %s\nExecução: %s/%s/actions/runs/%s\nAprovação:
+        consultar deployment review do Environment producao na execução.\n'' "$IMAGE" "$DIGEST" "$DEPLOY_URL" "$GITHUB_ACTOR"
+        "$(date -u +%FT%TZ)" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > reports/deploy-producao.md'
+    - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      if: always()
+      with:
+        name: relatorio-08-producao
+        path: reports/
+        if-no-files-found: error
+        retention-days: 14
+  resumo:
+    name: ★ Resumo da Esteira (sempre)
+    if: ${{ always() }}
+    needs:
+    - secrets-scan
+    - sast
+    - build
+    - sca
+    - docker-build
+    - image-scan
+    - dast-staging
+    - deploy-prod
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+    - *id001
+    - name: Baixar relatórios disponíveis
+      uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      with:
+        pattern: relatorio-*
+        path: reports/etapas/
+    - name: Consolidar status e gravar Job Summary
+      run: 'mkdir -p reports
+
+        python3 scripts/ci/summary.py'
+      env:
+        NEEDS_JSON: ${{ toJSON(needs) }}
+      if: always()
+    - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      if: always()
+      with:
+        name: resumo-da-esteira
+        path: reports/
+        if-no-files-found: error
+        retention-days: 14
+'on':
+  push:
+    branches:
+    - main
+    - master
+  pull_request:
+    branches:
+    - main
+    - master
+  workflow_dispatch: null
+defaults:
+  run:
+    shell: bash

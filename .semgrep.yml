@@ -1,0 +1,38 @@
+rules:
+  - id: javascript-no-eval
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: Evite avaliação dinâmica de código (OWASP A03 Injection).
+    patterns:
+      - pattern-either:
+          - pattern: eval(...)
+          - pattern: new Function(...)
+  - id: javascript-no-shell-user-input
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: Entrada externa não pode chegar a execução shell (OWASP A03).
+    mode: taint
+    pattern-sources:
+      - pattern: $REQ.query.$KEY
+      - pattern: $REQ.body.$KEY
+      - pattern: $URL.searchParams.get(...)
+    pattern-sinks:
+      - pattern: exec(...)
+      - pattern: execSync(...)
+  - id: react-no-raw-html
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: HTML bruto pode permitir XSS; prefira renderização escapada do React (OWASP A03).
+    pattern: <$TAG ... dangerouslySetInnerHTML={$VALUE} ... />
+  - id: javascript-no-disabled-tls
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: Não desative validação TLS (OWASP A02 Cryptographic Failures).
+    pattern: '({..., rejectUnauthorized: false, ...})'
+  - id: javascript-no-weak-crypto
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: MD5/SHA1 não devem proteger dados sensíveis (OWASP A02).
+    pattern-either:
+      - pattern: $CRYPTO.createHash("md5")
+      - pattern: $CRYPTO.createHash("sha1")

@@ -1,0 +1,14 @@
+node_modules
+.git
+.github
+docs
+reports
+dist
+.next
+.wrangler
+.openai
+.env*
+*.pem
+*.key
+playwright-report
+test-results
