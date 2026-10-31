@@ -10,6 +10,14 @@ COPY . .
 RUN npm run build:container
 
 FROM node:22.22.0-bookworm-slim AS runtime
+# Correções de segurança disponíveis na base Debian publicadas após a imagem.
+RUN apt-get update \
+    && apt-get upgrade -y --no-install-recommends \
+    && apt-get install -y --no-install-recommends ca-certificates \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx \
+    && rm -f /usr/local/bin/corepack
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0
 ARG APP_REVISION=local
 ENV APP_REVISION=$APP_REVISION
