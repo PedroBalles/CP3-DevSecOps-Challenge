@@ -1,100 +1,122 @@
-# vinext-starter
+# Casa Digital Segura — Pipeline DevSecOps
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+[![DevSecOps](https://github.com/TiagoLouzaPetagna/Challenge-Leroy/actions/workflows/devsecops.yml/badge.svg)](https://github.com/TiagoLouzaPetagna/Challenge-Leroy/actions/workflows/devsecops.yml)
 
-## Prerequisites
+Plataforma gamificada de conscientização sobre phishing para colaboradores da Leroy Merlin. Implementação da atividade **CP 03 — Pipeline DevSecOps** com GitHub Actions.
 
-- Node.js `>=22.13.0`
+> **Estado:** esteira e documentação preparadas; Gitleaks, Semgrep, Trivy fs, typecheck, build, testes e lint executados localmente com resultados registrados em [validação local](docs/validacao-local.md). **Ainda não houve** push, execução no Actions, imagem no GHCR, aprovação de Environment nem deploy em produção — o badge só refletirá a esteira depois disso.
 
-## Quick Start
+## Integrantes
+
+| Nome | RM |
+|---|---|
+| A informar pela equipe | A informar |
+
+Esses dados não constavam no material fornecido. Cada integrante deve contribuir com commits próprios, conforme o enunciado; não foram inventados nomes, RMs ou autoria.
+
+## Esteira
+
+```mermaid
+flowchart LR
+  A[1 Gitleaks] --> B[2 Semgrep]
+  B --> C[3 Build / testes / artefato]
+  C --> D[4 Trivy filesystem]
+  D --> E[5 Docker / GHCR]
+  E --> F[6 Trivy imagem]
+  F --> G[7 Homologação / ZAP]
+  G --> H{Revisor producao}
+  H --> I[8 Produção Azure]
+  I --> J[Resumo sempre]
+```
+
+| Etapa | Ferramenta / objetivo | Artifact na execução |
+|---|---|---|
+| 1 | Gitleaks: secrets no histórico, com redação | `relatorio-01-gitleaks` |
+| 2 | Semgrep: SAST, rulesets default/OWASP + regras locais | `relatorio-02-semgrep` |
+| 3 | npm/TypeScript: dependências, auditoria, build e testes | `relatorio-03-build`, `artefato-aplicacao-<SHA>` |
+| 4 | Trivy fs: CVEs, misconfig e secrets; HIGH/CRITICAL bloqueiam | `relatorio-04-trivy-sca` |
+| 5 | Docker Buildx: imagem multi-stage não-root e push pelo SHA | `relatorio-05-docker-build` |
+| 6 | Trivy image: HIGH/CRITICAL com correção bloqueiam | `relatorio-06-trivy-image` |
+| 7 | ZAP baseline: análise informativa do contêiner em homologação | `relatorio-07-homologacao-zap` |
+| 8 | Environment `producao`, aprovação e Azure OIDC por digest | `relatorio-08-producao` |
+| ★ | Consolidação de status e contagens, inclusive em falha | `resumo-da-esteira` |
+
+**Relatórios mais recentes:** abrir [histórico da esteira](https://github.com/TiagoLouzaPetagna/Challenge-Leroy/actions/workflows/devsecops.yml), escolher a execução e baixar os artifacts acima. O link específico de cada artifact será inserido depois que existir uma execução real.
+
+### Resultados medidos localmente
+
+| Etapa | Resultado observado |
+|---|---|
+| 1 Gitleaks | 18 commits, 59,74 MB, 11 falsos positivos documentados → 0 após fingerprints corretos |
+| 2 Semgrep | 540 regras, 226 arquivos, 0 achados; bloqueio comprovado com fixture `eval` (exit 1 → exit 0) |
+| 3 Build | `tsc --noEmit` 0 erros, build ok, 39 testes passando, lint limpo |
+| 4 Trivy fs | 5 CRITICAL + 14 HIGH corrigidos por upgrade → 0 (nenhuma supressão) |
+| 4b `npm audit` | produção (`--omit=dev`): 0 em todas as severidades; 11 high restantes são só de build/teste |
+| 5–8 | Não executados: exigem Docker/GHCR/Azure, indisponíveis no ambiente local |
+
+Detalhes, comandos e saídas em [validação local](docs/validacao-local.md).
+
+## Executar localmente
+
+Node.js 22.22.0, npm e Python 3 (para testes auxiliares dos gates).
 
 ```bash
-npm install
+npm ci
 npm run dev
+# http://localhost:3000
+```
+
+```bash
+npx tsc --noEmit
 npm run build
+npm run test:ci
+# Opcional: testes de navegador existentes.
+npx playwright install chromium
+npm run test:browser
 ```
 
-This starter does not use `wrangler.jsonc`.
+O fluxo original Vinext foi mantido. O contêiner usa Next standalone; configuração e limitações de D1/autenticação estão em [pipeline.md](docs/pipeline.md).
 
-## Included Shape
+## Executar via Docker
 
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-Signed-in visitors receive both `oai-authenticated-user-id` and `oai-authenticated-user-email`. Private Sites require every visitor to sign in; public Sites may also have anonymous visitors, for whom neither header is present.
-
-The user ID is stable for the same user on the same Site and different across Sites. Email and name are intended for display or contact purposes.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const userId = requestHeaders.get("oai-authenticated-user-id");
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
+```bash
+docker build --build-arg APP_REVISION="$(git rev-parse HEAD)" -t casa-digital:local .
+docker run --rm --name casa-digital -p 3000:3000 casa-digital:local
+curl -f http://localhost:3000/api/health
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
+Não passar credenciais em ARG/ENV versionados ou comandos compartilhados. Porta 3000, usuário `node`, health check e revisão por `/api/health`. Docker não estava disponível no executor desta entrega; o build da imagem ainda precisa ser validado.
 
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
+## Configuração para concluir a entrega
 
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
+1. Publicar os arquivos deste pacote no repositório; manter `package-lock.json` versionado.
+2. Criar GitHub Environments **`homologacao`** e **`producao`**. Em `producao`, habilitar Required reviewers (mínimo 1), impedir autoaprovação quando possível e restringir à `main` ou `master`. **Sem isso, YAML não garante aprovação humana.**
+3. Configurar Azure App Service Linux e identidade OIDC com acesso limitado ao Web App. Preencher as variables do Environment descritas em [docs/pipeline.md](docs/pipeline.md).
+4. Permitir publicação de pacotes pelo workflow. Após o primeiro push, tornar a imagem GHCR pública para pull pelo Azure, conforme o procedimento documentado.
+5. Executar a esteira em `main` ou `master`, corrigir achados reais sem ignorá-los em massa e revisar os artifacts.
+6. Demonstrar bloqueio/correção num PR de teste SAST, conforme o procedimento seguro em `docs/pipeline.md`.
+7. Registrar aprovador/data, URL de produção e prints genuínos em [docs/evidencias](docs/evidencias/README.md). Preencher nome/RM e garantir contribuições individuais reais.
 
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
+### Aprovação e produção — registro obrigatório
 
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
+- Execução completa bem-sucedida: **pendente** (depende de push e conta Azure).
+- Execução bloqueada e correção: **demonstrada localmente** — gate Semgrep exit 1 com `eval`, exit 0 após correção ([evidência](docs/validacao-local.md)); bloqueio no Actions ainda pendente.
+- Quem aprovou / data / relatórios consultados: **pendente**; fonte: deployment review do Environment `producao`.
+- URL de produção: **pendente**.
+- Imagem publicada / digest: **pendente** (sem runtime de contêiner no ambiente local).
+- Print do Resumo da Esteira: **pendente**; incluir somente após execução real.
 
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
+## Documentação
 
-## Useful Commands
+- [Oito etapas e configuração Azure](docs/pipeline.md)
+- [Achados, decisões e lições aprendidas](docs/observacoes.md)
+- [Validação local e impedimentos](docs/validacao-local.md)
+- [Checklist de evidências](docs/evidencias/README.md) e [relatórios locais reais](docs/evidencias/relatorios-locais/LEIA-ME.md)
+- [Roteiro de apresentação de até 10 minutos](docs/roteiro-apresentacao.md)
 
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
+## Segurança e rastreabilidade
 
-## Learn More
+Gitleaks varre histórico completo e mascara valores. Semgrep usa `--error`. Trivy não recebe ignorelist. ZAP é informativo por exigência do PDF; erro operacional não é aprovação. Docker/produção usam o digest retornado do push, não tag mutável. Relatórios são publicados com `always()` e ausência não significa zero. O scan da imagem inclui componentes do sistema operacional ausentes no lockfile.
 
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+O helper de headers `X-ChatGPT-*` é resquício do template original, **não** autenticação para aplicação pública. A CSP contém `unsafe-inline` por compatibilidade e precisa evoluir para nonce/hash; isso foi registrado como risco residual, não como problema completamente resolvido.
+

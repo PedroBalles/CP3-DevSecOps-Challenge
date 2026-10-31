@@ -1,0 +1,53 @@
+
+> site-creator-vinext-starter@0.1.0 test:ci
+> node --test tests/rendered-html.test.mjs tests/devsecops.test.mjs
+
+✔ relatório Trivy limpo é aceito (119.897919ms)
+✔ CVSS 9 bloqueia (limiar inclusivo) (109.981559ms)
+✔ SCA HIGH bloqueia mesmo abaixo de CVSS 9 (122.744814ms)
+✔ imagem HIGH com correção bloqueia (129.294745ms)
+✔ imagem sem correção é informativa (132.344432ms)
+✔ relatório ausente não vira zero (112.69531ms)
+✔ relatório sem alvos não aprova (107.501459ms)
+✔ ZAP High identificado (105.156974ms)
+✔ ZAP Medium fica informativo (105.336067ms)
+✔ ZAP sem alvo é erro, não sucesso (115.99299ms)
+✔ renderiza a plataforma Casa Digital Segura (148.987026ms)
+✔ renderiza as rotas funcionais do fluxo principal (820.500244ms)
+✔ todas as atividades disponíveis encerram com revisão explícita das respostas (8.057183ms)
+✔ mantém o estado local atrás de uma fronteira central e versionada (2.373646ms)
+(node:42146) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ concede a recompensa da missão uma única vez (856.946823ms)
+✔ valida conquistas de 100 pontos e a migração de preferências do Lote 7A (304.766818ms)
+✔ mantém o tutorial 7B versionado, retomável e sem conceder pontos (243.399816ms)
+✔ deriva jornada, recomendações e perfil somente dos registros reais (259.048196ms)
+✔ executa o ciclo adaptativo sem bloquear a jornada nem duplicar recompensas (263.800689ms)
+✔ agrega o desafio de Equipes com privacidade e contribuição única (279.211335ms)
+✔ valida Mudanca bancaria sem atalho, privacidade e coexistencia do agregado (290.476828ms)
+✔ agrupa a atividade recente, preserva recompensas e integra a contribuição de Equipes (265.292092ms)
+✔ conclui o primeiro recorte de Confiança sob pressão com contratos versionados (296.758404ms)
+✔ libera e conclui Você iniciou este acesso? somente depois dos dois PhishLabs (236.034513ms)
+✔ migra o envelope local v10 para v11 sem fabricar atividade (660.451438ms)
+✔ adapta a recuperação aos quatro incidentes e preserva as migrações anteriores (2012.365242ms)
+✔ monta a resposta pós-clique v2 sem reinterpretar a tentativa legada (1826.921095ms)
+✔ publica Mudança bancária v2 como estação de processo sem duplicar v1 (523.76335ms)
+✔ mantém o Arcade desacoplado com leaderboards e recompensas por jogo (65.026739ms)
+✔ conclui o Radar somente com a resposta correta e não duplica pontos (440.887458ms)
+✔ publica a fundação PARE v2 com contrato, avaliação e recompensa idempotente entre versões (339.599053ms)
+✔ mantém o primeiro percurso transversal íntegro e sem dependência do Radar (305.693992ms)
+✔ resolve o registro P0 sem rotas duplicadas nem queda silenciosa no hub (244.935831ms)
+✔ executa submissões na ordem validar, avaliar, persistir e retornar (39.09028ms)
+✔ publica Domínio sob a lupa v2 sem reinterpretar tentativas ou recompensas v1 (295.532687ms)
+✔ publica A conversa já estava acontecendo v2 com três reconstruções e compatibilidade v1 (328.95993ms)
+✔ publica Quem enviou de verdade? v2 com mapa de identidade e compatibilidade v1 (332.065129ms)
+✔ publica Uma manhã comum v2 como triagem em lote sem reabrir recompensas v1 (368.801072ms)
+✔ mostra estados explícitos para atividades planejadas e rotas desconhecidas (125.671669ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12367.862285

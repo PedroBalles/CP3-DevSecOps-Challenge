@@ -1,0 +1,1803 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.76.1"
+  },
+  "ReportID": "01a192d3-2bc9-7670-aa7d-b9fc321d3f4d",
+  "CreatedAt": "2026-10-31T16:37:55.273426395Z",
+  "ArtifactName": ".",
+  "ArtifactType": "filesystem",
+  "Results": [
+    {
+      "Target": "package-lock.json",
+      "Class": "lang-pkgs",
+      "Type": "npm",
+      "Packages": [
+        {
+          "ID": "@playwright/test@1.62.1",
+          "Name": "@playwright/test",
+          "Identifier": {
+            "PURL": "pkg:npm/%40playwright/test@1.62.1",
+            "UID": "74470ee9ffa1aafd"
+          },
+          "Version": "1.62.1",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Relationship": "direct",
+          "DependsOn": [
+            "playwright@1.62.1"
+          ],
+          "Locations": [
+            {
+              "StartLine": 2355,
+              "EndLine": 2370
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "drizzle-orm@0.45.2",
+          "Name": "drizzle-orm",
+          "Identifier": {
+            "PURL": "pkg:npm/drizzle-orm@0.45.2",
+            "UID": "31b28d8d45523317"
+          },
+          "Version": "0.45.2",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Relationship": "direct",
+          "Locations": [
+            {
+              "StartLine": 5393,
+              "EndLine": 5517
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "next@16.2.6",
+          "Name": "next",
+          "Identifier": {
+            "PURL": "pkg:npm/next@16.2.6",
+            "UID": "c1777bc824b1ffbf"
+          },
+          "Version": "16.2.6",
+          "Licenses": [
+            "MIT"
+          ],
+          "Relationship": "direct",
+          "DependsOn": [
+            "@next/env@16.2.6",
+            "@next/swc-darwin-arm64@16.2.6",
+            "@next/swc-darwin-x64@16.2.6",
+            "@next/swc-linux-arm64-gnu@16.2.6",
+            "@next/swc-linux-arm64-musl@16.2.6",
+            "@next/swc-linux-x64-gnu@16.2.6",
+            "@next/swc-linux-x64-musl@16.2.6",
+            "@next/swc-win32-arm64-msvc@16.2.6",
+            "@next/swc-win32-x64-msvc@16.2.6",
+            "@playwright/test@1.62.1",
+            "@swc/helpers@0.5.15",
+            "baseline-browser-mapping@2.10.30",
+            "caniuse-lite@1.0.30001793",
+            "postcss@8.4.31",
+            "react-dom@19.2.6",
+            "react@19.2.6",
+            "sharp@0.34.5",
+            "styled-jsx@5.1.6"
+          ],
+          "Locations": [
+            {
+              "StartLine": 7975,
+              "EndLine": 8027
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "react@19.2.6",
+          "Name": "react",
+          "Identifier": {
+            "PURL": "pkg:npm/react@19.2.6",
+            "UID": "5c83fb237ca97d7e"
+          },
+          "Version": "19.2.6",
+          "Licenses": [
+            "MIT"
+          ],
+          "Relationship": "direct",
+          "Locations": [
+            {
+              "StartLine": 8510,
+              "EndLine": 8518
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "react-dom@19.2.6",
+          "Name": "react-dom",
+          "Identifier": {
+            "PURL": "pkg:npm/react-dom@19.2.6",
+            "UID": "b607d3ee8f444f78"
+          },
+          "Version": "19.2.6",
+          "Licenses": [
+            "MIT"
+          ],
+          "Relationship": "direct",
+          "DependsOn": [
+            "react@19.2.6",
+            "scheduler@0.27.0"
+          ],
+          "Locations": [
+            {
+              "StartLine": 8519,
+              "EndLine": 8530
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@img/colour@1.1.0",
+          "Name": "@img/colour",
+          "Identifier": {
+            "PURL": "pkg:npm/%40img/colour@1.1.0",
+            "UID": "fda696e5dbe772d2"
+          },
+          "Version": "1.1.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 1588,
+              "EndLine": 1597
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@next/env@16.2.6",
+          "Name": "@next/env",
+          "Identifier": {
+            "PURL": "pkg:npm/%40next/env@16.2.6",
+            "UID": "4772ee5c1240e132"
+          },
+          "Version": "16.2.6",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 2153,
+              "EndLine": 2158
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@next/swc-darwin-arm64@16.2.6",
+          "Name": "@next/swc-darwin-arm64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40next/swc-darwin-arm64@16.2.6",
+            "UID": "e47a8c78b8ffdb78"
+          },
+          "Version": "16.2.6",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 2169,
+              "EndLine": 2184
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@next/swc-darwin-x64@16.2.6",
+          "Name": "@next/swc-darwin-x64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40next/swc-darwin-x64@16.2.6",
+            "UID": "63d85acaa85b452a"
+          },
+          "Version": "16.2.6",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 2185,
+              "EndLine": 2200
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@next/swc-linux-arm64-gnu@16.2.6",
+          "Name": "@next/swc-linux-arm64-gnu",
+          "Identifier": {
+            "PURL": "pkg:npm/%40next/swc-linux-arm64-gnu@16.2.6",
+            "UID": "35ad454f17b197f4"
+          },
+          "Version": "16.2.6",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 2201,
+              "EndLine": 2216
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@next/swc-linux-arm64-musl@16.2.6",
+          "Name": "@next/swc-linux-arm64-musl",
+          "Identifier": {
+            "PURL": "pkg:npm/%40next/swc-linux-arm64-musl@16.2.6",
+            "UID": "dfe919af2cccba68"
+          },
+          "Version": "16.2.6",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 2217,
+              "EndLine": 2232
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@next/swc-linux-x64-gnu@16.2.6",
+          "Name": "@next/swc-linux-x64-gnu",
+          "Identifier": {
+            "PURL": "pkg:npm/%40next/swc-linux-x64-gnu@16.2.6",
+            "UID": "bdd77b1dcf8d21d3"
+          },
+          "Version": "16.2.6",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 2233,
+              "EndLine": 2248
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@next/swc-linux-x64-musl@16.2.6",
+          "Name": "@next/swc-linux-x64-musl",
+          "Identifier": {
+            "PURL": "pkg:npm/%40next/swc-linux-x64-musl@16.2.6",
+            "UID": "3c1e584dd0bd34d0"
+          },
+          "Version": "16.2.6",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 2249,
+              "EndLine": 2264
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@next/swc-win32-arm64-msvc@16.2.6",
+          "Name": "@next/swc-win32-arm64-msvc",
+          "Identifier": {
+            "PURL": "pkg:npm/%40next/swc-win32-arm64-msvc@16.2.6",
+            "UID": "202057ec95ca0d15"
+          },
+          "Version": "16.2.6",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 2265,
+              "EndLine": 2280
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@next/swc-win32-x64-msvc@16.2.6",
+          "Name": "@next/swc-win32-x64-msvc",
+          "Identifier": {
+            "PURL": "pkg:npm/%40next/swc-win32-x64-msvc@16.2.6",
+            "UID": "782bf25910cf6962"
+          },
+          "Version": "16.2.6",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 2281,
+              "EndLine": 2296
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@swc/helpers@0.5.15",
+          "Name": "@swc/helpers",
+          "Identifier": {
+            "PURL": "pkg:npm/%40swc/helpers@0.5.15",
+            "UID": "208fa8407e0bbc47"
+          },
+          "Version": "0.5.15",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "tslib@2.8.1"
+          ],
+          "Locations": [
+            {
+              "StartLine": 2750,
+              "EndLine": 2758
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "baseline-browser-mapping@2.10.30",
+          "Name": "baseline-browser-mapping",
+          "Identifier": {
+            "PURL": "pkg:npm/baseline-browser-mapping@2.10.30",
+            "UID": "283c05d491022cce"
+          },
+          "Version": "2.10.30",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 4416,
+              "EndLine": 4427
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "caniuse-lite@1.0.30001793",
+          "Name": "caniuse-lite",
+          "Identifier": {
+            "PURL": "pkg:npm/caniuse-lite@1.0.30001793",
+            "UID": "4aa4261054bfd856"
+          },
+          "Version": "1.0.30001793",
+          "Licenses": [
+            "CC-BY-4.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 4570,
+              "EndLine": 4589
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "client-only@0.0.1",
+          "Name": "client-only",
+          "Identifier": {
+            "PURL": "pkg:npm/client-only@0.0.1",
+            "UID": "6803e87d4a8f6534"
+          },
+          "Version": "0.0.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 4618,
+              "EndLine": 4623
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "detect-libc@2.1.2",
+          "Name": "detect-libc",
+          "Identifier": {
+            "PURL": "pkg:npm/detect-libc@2.1.2",
+            "UID": "4ea344fac6b4a8ad"
+          },
+          "Version": "2.1.2",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 4870,
+              "EndLine": 4879
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "nanoid@3.3.12",
+          "Name": "nanoid",
+          "Identifier": {
+            "PURL": "pkg:npm/nanoid@3.3.12",
+            "UID": "3b5dce6db809cef5"
+          },
+          "Version": "3.3.12",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 7927,
+              "EndLine": 7944
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "picocolors@1.1.1",
+          "Name": "picocolors",
+          "Identifier": {
+            "PURL": "pkg:npm/picocolors@1.1.1",
+            "UID": "d249b6919c7dd642"
+          },
+          "Version": "1.1.1",
+          "Licenses": [
+            "ISC"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 8345,
+              "EndLine": 8350
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "playwright@1.62.1",
+          "Name": "playwright",
+          "Identifier": {
+            "PURL": "pkg:npm/playwright@1.62.1",
+            "UID": "8eeaf9dc9c9cd3b2"
+          },
+          "Version": "1.62.1",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "fsevents@2.3.2",
+            "playwright-core@1.62.1"
+          ],
+          "Locations": [
+            {
+              "StartLine": 8364,
+              "EndLine": 8382
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "playwright-core@1.62.1",
+          "Name": "playwright-core",
+          "Identifier": {
+            "PURL": "pkg:npm/playwright-core@1.62.1",
+            "UID": "bfb1f1f7c0fe2b6"
+          },
+          "Version": "1.62.1",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 8383,
+              "EndLine": 8395
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "postcss@8.4.31",
+          "Name": "postcss",
+          "Identifier": {
+            "PURL": "pkg:npm/postcss@8.4.31",
+            "UID": "5af5e03cfb2823a0"
+          },
+          "Version": "8.4.31",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "nanoid@3.3.12",
+            "picocolors@1.1.1",
+            "source-map-js@1.2.1"
+          ],
+          "Locations": [
+            {
+              "StartLine": 8028,
+              "EndLine": 8055
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "scheduler@0.27.0",
+          "Name": "scheduler",
+          "Identifier": {
+            "PURL": "pkg:npm/scheduler@0.27.0",
+            "UID": "9d7d5eda9b11ee50"
+          },
+          "Version": "0.27.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 8804,
+              "EndLine": 8809
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "semver@7.8.0",
+          "Name": "semver",
+          "Identifier": {
+            "PURL": "pkg:npm/semver@7.8.0",
+            "UID": "c3307b45407930d4"
+          },
+          "Version": "7.8.0",
+          "Licenses": [
+            "ISC"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 3407,
+              "EndLine": 3419
+            },
+            {
+              "StartLine": 6934,
+              "EndLine": 6946
+            },
+            {
+              "StartLine": 8975,
+              "EndLine": 8987
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "sharp@0.34.5",
+          "Name": "sharp",
+          "Identifier": {
+            "PURL": "pkg:npm/sharp@0.34.5",
+            "UID": "36f7a8e060fb957"
+          },
+          "Version": "0.34.5",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "@img/colour@1.1.0",
+            "@img/sharp-darwin-arm64@0.34.5",
+            "@img/sharp-darwin-x64@0.34.5",
+            "@img/sharp-libvips-darwin-arm64@1.2.4",
+            "@img/sharp-libvips-darwin-x64@1.2.4",
+            "@img/sharp-libvips-linux-arm64@1.2.4",
+            "@img/sharp-libvips-linux-arm@1.2.4",
+            "@img/sharp-libvips-linux-ppc64@1.2.4",
+            "@img/sharp-libvips-linux-riscv64@1.2.4",
+            "@img/sharp-libvips-linux-s390x@1.2.4",
+            "@img/sharp-libvips-linux-x64@1.2.4",
+            "@img/sharp-libvips-linuxmusl-arm64@1.2.4",
+            "@img/sharp-libvips-linuxmusl-x64@1.2.4",
+            "@img/sharp-linux-arm64@0.34.5",
+            "@img/sharp-linux-arm@0.34.5",
+            "@img/sharp-linux-ppc64@0.34.5",
+            "@img/sharp-linux-riscv64@0.34.5",
+            "@img/sharp-linux-s390x@0.34.5",
+            "@img/sharp-linux-x64@0.34.5",
+            "@img/sharp-linuxmusl-arm64@0.34.5",
+            "@img/sharp-linuxmusl-x64@0.34.5",
+            "@img/sharp-wasm32@0.34.5",
+            "@img/sharp-win32-arm64@0.34.5",
+            "@img/sharp-win32-ia32@0.34.5",
+            "@img/sharp-win32-x64@0.34.5",
+            "detect-libc@2.1.2",
+            "semver@7.8.0"
+          ],
+          "Locations": [
+            {
+              "StartLine": 8930,
+              "EndLine": 8974
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "source-map-js@1.2.1",
+          "Name": "source-map-js",
+          "Identifier": {
+            "PURL": "pkg:npm/source-map-js@1.2.1",
+            "UID": "11c7df9d64bc6918"
+          },
+          "Version": "1.2.1",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 9097,
+              "EndLine": 9105
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "styled-jsx@5.1.6",
+          "Name": "styled-jsx",
+          "Identifier": {
+            "PURL": "pkg:npm/styled-jsx@5.1.6",
+            "UID": "d6aafd80580a5f97"
+          },
+          "Version": "5.1.6",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "DependsOn": [
+            "client-only@0.0.1",
+            "react@19.2.6"
+          ],
+          "Locations": [
+            {
+              "StartLine": 9314,
+              "EndLine": 9336
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "tslib@2.8.1",
+          "Name": "tslib",
+          "Identifier": {
+            "PURL": "pkg:npm/tslib@2.8.1",
+            "UID": "6875c2d7a0fb506c"
+          },
+          "Version": "2.8.1",
+          "Licenses": [
+            "0BSD"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 3039,
+              "EndLine": 3045
+            },
+            {
+              "StartLine": 9594,
+              "EndLine": 9599
+            }
+          ],
+          "AnalyzedBy": "npm"
+        }
+      ],
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "CVE-2026-67213",
+          "VendorIDs": [
+            "GHSA-2v37-7h3g-55p8"
+          ],
+          "PkgID": "nanoid@3.3.12",
+          "PkgName": "nanoid",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/nanoid@3.3.12",
+            "UID": "3b5dce6db809cef5"
+          },
+          "InstalledVersion": "3.3.12",
+          "FixedVersion": "3.3.18, 5.1.6",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-67213",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:013c5d20103e22a93f74e9314b30222954fd292b57746b03a2cfb8d4cf70483d",
+          "Title": "nanoid: nanoid: Denial of Service via infinite loop in random ID generation",
+          "Description": "nanoid (Nano ID) before 5.1.6 contains an infinite loop in the customAlphabet and customRandom functions. When these functions are configured with a size of 0, the internal generation loop never satisfies its exit condition and spins indefinitely, hanging the calling thread. An application that passes an unvalidated, attacker-controlled size of 0 to these functions is exposed to a denial-of-service condition.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-835"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3,
+            "nvd": 3,
+            "redhat": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+              "V3Score": 5.9,
+              "V40Score": 8.2
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-67213",
+            "https://advisory.echohq.com/cve/CVE-2026-67213",
+            "https://github.com/ai/nanoid",
+            "https://github.com/ai/nanoid/commit/cb3626d0f3342fdf179cd425fd9c4fbb92c7d0e7",
+            "https://github.com/ai/nanoid/commit/e10f8d40ce9d1ab47f66d65a16b48086432730d0",
+            "https://github.com/ai/nanoid/commit/f9d13f150847d117877adee3460a46eceb0cf49b",
+            "https://github.com/ai/nanoid/releases/tag/3.3.17",
+            "https://github.com/ai/nanoid/releases/tag/3.3.18",
+            "https://github.com/ai/nanoid/releases/tag/5.1.6",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-67213",
+            "https://www.cve.org/CVERecord?id=CVE-2026-67213",
+            "https://www.vulncheck.com/advisories/nanoid-before-infinite-loop-via-zero-size-in-customalphabet-and-customrandom"
+          ],
+          "PublishedDate": "2026-07-29T14:16:34.89Z",
+          "LastModifiedDate": "2026-10-23T23:10:00.157Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-67214",
+          "VendorIDs": [
+            "GHSA-28wg-ghj8-5hjv"
+          ],
+          "PkgID": "nanoid@3.3.12",
+          "PkgName": "nanoid",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/nanoid@3.3.12",
+            "UID": "3b5dce6db809cef5"
+          },
+          "InstalledVersion": "3.3.12",
+          "FixedVersion": "3.3.16, 5.1.16",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-67214",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:c4e3b32c209398ed9380e07cea0b3671b45cdb95486210724da855fdb78ecd42",
+          "Title": "nanoid: nanoid: Denial of Service via negative size input in non-secure module functions",
+          "Description": "nanoid (Nano ID) before 3.3.16 and 5.1.16 contains an infinite loop in the customAlphabet and nanoid functions of its non-secure module (nanoid/non-secure). When these functions are given a negative size, the loop counter is decremented from a negative value and never reaches its termination condition, spinning indefinitely and hanging the calling thread. An application that passes an unvalidated, attacker-controlled negative size to these functions is exposed to a denial-of-service condition.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-835"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3,
+            "nvd": 3,
+            "redhat": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+              "V3Score": 5.9,
+              "V40Score": 8.2
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-67214",
+            "https://advisory.echohq.com/cve/CVE-2026-67214",
+            "https://github.com/ai/nanoid",
+            "https://github.com/ai/nanoid/commit/6ccc67bbaba71d3d77a21d9b636f4171a268ce49",
+            "https://github.com/ai/nanoid/commit/e835c9b71eab832bc6106944bdd26ea96cf2c66d",
+            "https://github.com/ai/nanoid/pull/600",
+            "https://github.com/ai/nanoid/pull/601",
+            "https://github.com/ai/nanoid/releases/tag/3.3.16",
+            "https://github.com/ai/nanoid/releases/tag/5.1.16",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-67214",
+            "https://www.cve.org/CVERecord?id=CVE-2026-67214",
+            "https://www.vulncheck.com/advisories/nanoid-before-infinite-loop-via-negative-size-in-non-secure-module"
+          ],
+          "PublishedDate": "2026-07-29T14:16:35.043Z",
+          "LastModifiedDate": "2026-10-29T21:17:29.87Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-75604",
+          "VendorIDs": [
+            "GHSA-p293-qw3h-jr36"
+          ],
+          "PkgID": "next@16.2.6",
+          "PkgName": "next",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/next@16.2.6",
+            "UID": "c1777bc824b1ffbf"
+          },
+          "InstalledVersion": "16.2.6",
+          "FixedVersion": "15.5.24, 16.3.3",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-75604",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:22ea877b4e27b5bdcae824905d9bfd19f3acfe101584ffc84d6ef1bdfe04e6fd",
+          "Title": "next: Next.js: Unauthenticated Remote Code Execution on windows-hosted servers",
+          "Description": "Next.js is a React framework for building full-stack web applications. From 13.4.0 until 15.5.24 and 16.3.3, Next.js applications using Pages Router or App Router without Cache Components on Windows-hosted servers do not consistently escape backslashes in route segments before constructing incremental-cache paths. In packages/next/src/shared/lib/router/utils/escape-path-delimiters.ts and packages/next/src/server/lib/incremental-cache/file-system-cache.ts, a remote request can supply encoded Windows path separators that traverse outside the intended cache root and expose private build data, including the server-reference-manifest encryption key. Disclosure of that key can enable remote code execution in the affected application. This issue is fixed in versions 15.5.24 and 16.3.3.",
+          "Severity": "CRITICAL",
+          "CweIDs": [
+            "CWE-22"
+          ],
+          "VendorSeverity": {
+            "ghsa": 4,
+            "redhat": 4
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+              "V3Score": 9.1
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "V3Score": 8.1
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-75604",
+            "https://advisory.echohq.com/cve/CVE-2026-75604",
+            "https://github.com/vercel/next.js",
+            "https://github.com/vercel/next.js/commit/968b9fcb26bdeb8e0a861a9df05361474666d51b",
+            "https://github.com/vercel/next.js/commit/b0f3460a92b955d3ca41fccff9a525a2b910fbf3",
+            "https://github.com/vercel/next.js/releases/tag/v15.5.24",
+            "https://github.com/vercel/next.js/releases/tag/v16.3.3",
+            "https://github.com/vercel/next.js/security/advisories/GHSA-p293-qw3h-jr36",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-75604",
+            "https://www.cve.org/CVERecord?id=CVE-2026-75604"
+          ],
+          "PublishedDate": "2026-09-01T22:17:12.697Z",
+          "LastModifiedDate": "2026-09-09T21:09:13.08Z"
+        },
+        {
+          "VulnerabilityID": "GHSA-2464-fhr4-w9xw",
+          "PkgID": "next@16.2.6",
+          "PkgName": "next",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/next@16.2.6",
+            "UID": "c1777bc824b1ffbf"
+          },
+          "InstalledVersion": "16.2.6",
+          "FixedVersion": "15.5.28, 16.4.1",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://github.com/advisories/GHSA-2464-fhr4-w9xw",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:f630c30e8f706653400f05dea3e5af4d3a41bc8a04a4404fa163247fbbd0d3b0",
+          "Title": "Next.js: Unauthenticated Remote Code Execution in Image Optimization API when SVG files are used",
+          "Description": "## Impact\n\nA memory-related vulnerability has been discovered in an upstream library used for Image Optimization can lead to possible remote code execution (RCE) when Next.js runs on glibc-based Linux.\n\n## Workaround\n\nEnsure the version of `sharp` used by Next.js is greater than or equal to `0.35.5`. Fresh installs automatically get a fixed version of `sharp`.\nUpgrading Next.js to the patched versions will ensure package managers automatically provide a fixed version of `sharp` to Next.js.",
+          "Severity": "CRITICAL",
+          "VendorSeverity": {
+            "ghsa": 4
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H",
+              "V40Score": 9.5
+            }
+          },
+          "References": [
+            "https://advisory.echohq.com/cve/GHSA-2464-fhr4-w9xw",
+            "https://github.com/advisories/GHSA-2464-fhr4-w9xw",
+            "https://github.com/vercel/next.js",
+            "https://github.com/vercel/next.js/commit/5e3b687b5edb868b064bdc058d768a7021e7f6ad",
+            "https://github.com/vercel/next.js/commit/9571ec899f063df6533351bec390ccb2cc0af6a3",
+            "https://github.com/vercel/next.js/releases/tag/v15.5.28",
+            "https://github.com/vercel/next.js/releases/tag/v16.4.1",
+            "https://github.com/vercel/next.js/security/advisories/GHSA-2464-fhr4-w9xw",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-96889"
+          ],
+          "PublishedDate": "2026-10-22T15:52:53Z",
+          "LastModifiedDate": "2026-10-22T15:52:53Z"
+        },
+        {
+          "VulnerabilityID": "GHSA-2xp9-vwfh-vxw4",
+          "PkgID": "next@16.2.6",
+          "PkgName": "next",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/next@16.2.6",
+            "UID": "c1777bc824b1ffbf"
+          },
+          "InstalledVersion": "16.2.6",
+          "FixedVersion": "15.5.24, 16.3.3",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://github.com/advisories/GHSA-2xp9-vwfh-vxw4",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:a5799dc29f3a6d75258de4212c2fc64c4fa010579f5823c4c5956993cff97000",
+          "Title": "Next.js: Unauthenticated Remote Code Execution in Image Optimization API when AVIF files are used",
+          "Description": "A vulnerability in the underlying `libheif` library used by `sharp` which Next.js uses for image optimization can lead to remote code execution when AVIF files are optimized.\n\nUntil a fix has propagated, optimization of AVIF files is disabled.",
+          "Severity": "CRITICAL",
+          "VendorSeverity": {
+            "ghsa": 4
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H",
+              "V40Score": 9.5
+            }
+          },
+          "References": [
+            "https://advisory.echohq.com/cve/GHSA-2xp9-vwfh-vxw4",
+            "https://github.com/advisories/GHSA-2xp9-vwfh-vxw4",
+            "https://github.com/strukturag/libheif/security/advisories/GHSA-g89c-p67h-r497",
+            "https://github.com/vercel/next.js",
+            "https://github.com/vercel/next.js/commit/3a15b4ac6ac8e70b1a9b18ecc18e8434462899b3",
+            "https://github.com/vercel/next.js/commit/409772ec807def20132d251ad48fd8d8ad4c73c2",
+            "https://github.com/vercel/next.js/commit/7a5937a8ab20b89d0a961f75eabb11577f5d5998",
+            "https://github.com/vercel/next.js/pull/97875",
+            "https://github.com/vercel/next.js/pull/97931",
+            "https://github.com/vercel/next.js/releases/tag/v15.5.24",
+            "https://github.com/vercel/next.js/releases/tag/v16.3.3",
+            "https://github.com/vercel/next.js/security/advisories/GHSA-2xp9-vwfh-vxw4"
+          ],
+          "PublishedDate": "2026-09-08T21:21:12Z",
+          "LastModifiedDate": "2026-09-08T21:21:12Z"
+        },
+        {
+          "VulnerabilityID": "GHSA-673q-mjm6-r5xr",
+          "PkgID": "next@16.2.6",
+          "PkgName": "next",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/next@16.2.6",
+            "UID": "c1777bc824b1ffbf"
+          },
+          "InstalledVersion": "16.2.6",
+          "FixedVersion": "16.4.1",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://github.com/advisories/GHSA-673q-mjm6-r5xr",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:5470c1fcc97d5c12794d2cdf96ecfd6339c5d9638c6f0f99587bfb7770b0909d",
+          "Title": "Next.js: Unauthenticated Remote Code Execution in `use cache` functions returning typed arrays",
+          "Description": "## Impact\n\nA vulnerability in applications using App router with Cache Component can lead to remote code execution. The application needs to have a `use cache` function that returns multiple typed arrays.\n\n## Workaround\n\nThere is no known workaround for affected applications with such `use cache` functions. You should upgrade immediately even if your application does not have similar functions.",
+          "Severity": "CRITICAL",
+          "VendorSeverity": {
+            "ghsa": 4
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:N",
+              "V40Score": 9.5
+            }
+          },
+          "References": [
+            "https://advisory.echohq.com/cve/GHSA-673q-mjm6-r5xr",
+            "https://github.com/advisories/GHSA-673q-mjm6-r5xr",
+            "https://github.com/vercel/next.js",
+            "https://github.com/vercel/next.js/commit/a4cea6aec5da89d116b8960e113189cf51745d2f",
+            "https://github.com/vercel/next.js/releases/tag/v16.4.1",
+            "https://github.com/vercel/next.js/security/advisories/GHSA-673q-mjm6-r5xr"
+          ],
+          "PublishedDate": "2026-10-22T16:42:31Z",
+          "LastModifiedDate": "2026-10-22T16:42:32Z"
+        },
+        {
+          "VulnerabilityID": "GHSA-vcvr-r3jv-pc5j",
+          "PkgID": "next@16.2.6",
+          "PkgName": "next",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/next@16.2.6",
+            "UID": "c1777bc824b1ffbf"
+          },
+          "InstalledVersion": "16.2.6",
+          "FixedVersion": "16.3.6",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://github.com/advisories/GHSA-vcvr-r3jv-pc5j",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:03cd52ed5322d5b08270b42bbad33a01211e59188646efae34dcba57eef367ad",
+          "Title": "Next.js: Remote Code Execution in next/og ImageResponse",
+          "Description": "## Impact\n\nThe Node.js `ImageResponse` implementation from `next/og` is affected by an upstream vulnerability. This can lead to remote code execution.\n\nAffected applications pass attacker-controlled values into SVG content, attributes, or styles during image generation:\n\n```tsx\nimport { ImageResponse } from 'next/og'\n\nexport async function GET(request: Request) {\n  const value = new URL(request.url).searchParams.get('value') ?? ''\n\n  return new ImageResponse(\n    \u003csvg width=\"1200\" height=\"630\"\u003e\n      \u003ctitle\u003e{value}\u003c/title\u003e\n    \u003c/svg\u003e\n  )\n}\n```\n\nApplications using the Edge `ImageResponse` implementation, or applications that do not pass attacker-controlled values into SVG content, attributes, or styles, are not affected.\n\n## Workaround\n\nIf upgrading is not immediately possible, do not pass attacker-controlled values into SVG content, attributes, or styles rendered by the Node.js `ImageResponse` implementation from `next/og`.",
+          "Severity": "CRITICAL",
+          "VendorSeverity": {
+            "ghsa": 4
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H",
+              "V40Score": 9.5
+            }
+          },
+          "References": [
+            "https://advisory.echohq.com/cve/GHSA-vcvr-r3jv-pc5j",
+            "https://github.com/advisories/GHSA-vcvr-r3jv-pc5j",
+            "https://github.com/vercel/next.js",
+            "https://github.com/vercel/next.js/commit/868fad38690d72088868f299fa2bef339b26838e",
+            "https://github.com/vercel/next.js/releases/tag/v16.3.6",
+            "https://github.com/vercel/next.js/security/advisories/GHSA-vcvr-r3jv-pc5j",
+            "https://github.com/vercel/satori/security/advisories/GHSA-wx4j-mvgx-mqwp"
+          ],
+          "PublishedDate": "2026-09-30T14:48:30Z",
+          "LastModifiedDate": "2026-09-30T14:48:30Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-64641",
+          "VendorIDs": [
+            "GHSA-m99w-x7hq-7vfj"
+          ],
+          "PkgID": "next@16.2.6",
+          "PkgName": "next",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/next@16.2.6",
+            "UID": "c1777bc824b1ffbf"
+          },
+          "InstalledVersion": "16.2.6",
+          "FixedVersion": "15.5.21, 16.2.11",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-64641",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:d24ef8bc84f2902f32e5cba3baaa127fc2665a78d7bf966a319e918800c6885d",
+          "Title": "next: Next.js: Denial of Service via crafted requests to App Router with Server Actions",
+          "Description": "Next.js is a React framework for building full-stack web applications. In versions 13.0.0 through 15.5.20 and 16.0.0 through 16.2.10, crafted requests targeting Next.js applications using App Router with at least one Server Action can lead to excessive CPU usage blocking processing of further requests in the same process. This issue has been fixed in versions 15.5.21 and 16.2.11.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-834"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3,
+            "nvd": 3,
+            "redhat": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+              "V40Score": 8.2
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-64641",
+            "https://advisory.echohq.com/cve/CVE-2026-64641",
+            "https://github.com/vercel/next.js",
+            "https://github.com/vercel/next.js/commit/019628571641dec57aaf349ba0c360e3964e6f12",
+            "https://github.com/vercel/next.js/pull/96013",
+            "https://github.com/vercel/next.js/releases/tag/v15.5.21",
+            "https://github.com/vercel/next.js/releases/tag/v16.2.11",
+            "https://github.com/vercel/next.js/security/advisories/GHSA-m99w-x7hq-7vfj",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-64641",
+            "https://www.cve.org/CVERecord?id=CVE-2026-64641"
+          ],
+          "PublishedDate": "2026-07-27T18:16:58.85Z",
+          "LastModifiedDate": "2026-10-24T13:10:00.147Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-64642",
+          "VendorIDs": [
+            "GHSA-6gpp-xcg3-4w24"
+          ],
+          "PkgID": "next@16.2.6",
+          "PkgName": "next",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/next@16.2.6",
+            "UID": "c1777bc824b1ffbf"
+          },
+          "InstalledVersion": "16.2.6",
+          "FixedVersion": "16.2.11",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-64642",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:b41a2512c47e1e95e41b8fc3b3a1bcac9682cf676c15b8eda6844bd2bbef7697",
+          "Title": "next: Next.js: Authentication bypass leading to unauthorized access",
+          "Description": "Next.js is a React framework for building full-stack web applications. In versions 16.0.0 through 16.2.10, crafted requests targeting Next.js applications using App Router built with Turbopack and a single entry in config.i18n.locales can bypass middleware/proxy based authentication. This issue has been fixed in version 16.2.11.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-285"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3,
+            "nvd": 3,
+            "redhat": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N",
+              "V40Score": 8.3
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+              "V3Score": 8.2
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+              "V3Score": 8.2
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-64642",
+            "https://advisory.echohq.com/cve/CVE-2026-64642",
+            "https://github.com/vercel/next.js",
+            "https://github.com/vercel/next.js/commit/6bf4df14508ad6c0cd46af50c6051ee42f2d9151",
+            "https://github.com/vercel/next.js/pull/96014",
+            "https://github.com/vercel/next.js/releases/tag/v16.2.11",
+            "https://github.com/vercel/next.js/security/advisories/GHSA-6gpp-xcg3-4w24",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-64642",
+            "https://www.cve.org/CVERecord?id=CVE-2026-64642"
+          ],
+          "PublishedDate": "2026-07-27T18:16:59.01Z",
+          "LastModifiedDate": "2026-10-24T13:10:00.147Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-64645",
+          "VendorIDs": [
+            "GHSA-p9j2-gv94-2wf4"
+          ],
+          "PkgID": "next@16.2.6",
+          "PkgName": "next",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/next@16.2.6",
+            "UID": "c1777bc824b1ffbf"
+          },
+          "InstalledVersion": "16.2.6",
+          "FixedVersion": "15.5.21, 16.2.11",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-64645",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:ac6e0fb90b6d86c95e74087c46cb60ac79b35e4bd1f43781e66e31c56b1893bf",
+          "Title": "next: Next.js: Server-Side Request Forgery vulnerability",
+          "Description": "Next.js is a React framework for building full-stack web applications. In versions 12.0.0 through 15.5.20 and 16.0.0 through 16.2.10, a\n rewrites() or redirects() rule that builds its external destination hostname from request-controlled input can be pointed at an arbitrary hostname, regardless of the rule's hostname suffix. For a rewrite, Next.js proxies the request to that arbitrary host and serves the response from the application's origin, leading to Server-Side Request forgery. A redirects() rule configured this way is vulnerable to an Open Redirect. This issue has been fixed in versions 15.5.21 and 16.2.11.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-601",
+            "CWE-918"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3,
+            "nvd": 2,
+            "redhat": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:L/SI:L/SA:N",
+              "V40Score": 8.3
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+              "V3Score": 6.1
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+              "V3Score": 8.2
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-64645",
+            "https://advisory.echohq.com/cve/CVE-2026-64645",
+            "https://github.com/vercel/next.js",
+            "https://github.com/vercel/next.js/commit/35f501357e9b0fe7c950b0d6aa8fcf5343f707e9",
+            "https://github.com/vercel/next.js/commit/d3033266c6dff23f7be71e19341fe3a8c6e2c599",
+            "https://github.com/vercel/next.js/releases/tag/v15.5.21",
+            "https://github.com/vercel/next.js/releases/tag/v16.2.11",
+            "https://github.com/vercel/next.js/security/advisories/GHSA-p9j2-gv94-2wf4",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-64645",
+            "https://www.cve.org/CVERecord?id=CVE-2026-64645"
+          ],
+          "PublishedDate": "2026-07-27T18:16:59.453Z",
+          "LastModifiedDate": "2026-10-24T13:10:00.147Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-64649",
+          "VendorIDs": [
+            "GHSA-89xv-2m56-2m9x"
+          ],
+          "PkgID": "next@16.2.6",
+          "PkgName": "next",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/next@16.2.6",
+            "UID": "c1777bc824b1ffbf"
+          },
+          "InstalledVersion": "16.2.6",
+          "FixedVersion": "15.5.21, 16.2.11",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-64649",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:01959755cfbb9bb3081f017e34938ce05680d1d02e60ac7e85d84b6064bada23",
+          "Title": "next: Next.js: Server-Side Request Forgery via malicious host redirection in Server Actions",
+          "Description": "Next.js is a React framework for building full-stack web applications. In versions 14.1.1 through 15.5.20 and 16.0.0 through 16.2.10, when a Server Action forwards or redirects a request, an attacker can cause the server to send that outbound request to a malicious host (Server-Side Request Forgery). This requires the attacker's request to control Host-associated headers. In some configurations, it's also possible to obtain internal values that weaken middleware/proxy authorization. Applications that use Server Actions are affected when the incoming host header is not fixed to a trusted value. This typically occurs on custom servers, or on deployments not behind a proxy that pins the host. Managed hosting pins the host upstream and is not affected; next start and standalone output do the same from version 14.2 onward. This issue has been fixed in versions 15.5.21 and 16.2.11.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-918"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3,
+            "nvd": 2,
+            "redhat": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N",
+              "V40Score": 8.3
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+              "V3Score": 6.5
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+              "V3Score": 8.2
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-64649",
+            "https://advisory.echohq.com/cve/CVE-2026-64649",
+            "https://github.com/vercel/next.js",
+            "https://github.com/vercel/next.js/commit/b51206321854193208c0805ba42acc49287f942b",
+            "https://github.com/vercel/next.js/commit/e3e5666ccead3a15162793d697af5e48b7cc0498",
+            "https://github.com/vercel/next.js/releases/tag/v15.5.21",
+            "https://github.com/vercel/next.js/releases/tag/v16.2.11",
+            "https://github.com/vercel/next.js/security/advisories/GHSA-89xv-2m56-2m9x",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-64649",
+            "https://www.cve.org/CVERecord?id=CVE-2026-64649"
+          ],
+          "PublishedDate": "2026-07-27T20:16:40.703Z",
+          "LastModifiedDate": "2026-10-24T13:10:00.147Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-94482",
+          "VendorIDs": [
+            "GHSA-p3m5-59mp-jv5r"
+          ],
+          "PkgID": "next@16.2.6",
+          "PkgName": "next",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/next@16.2.6",
+            "UID": "c1777bc824b1ffbf"
+          },
+          "InstalledVersion": "16.2.6",
+          "FixedVersion": "15.5.28, 16.4.1",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-94482",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:81b49f3b7afca622503d502b577072e16b5f3af089facc234eb284ae65e1fdcf",
+          "Title": "next: Next.js: Denial of Service via crafted requests targeting Server Actions",
+          "Description": "Next.js is a React framework for building full-stack web applications. From 13.0.0 until 15.5.28 and 16.4.1, crafted requests targeting App Router applications with at least one Server Action can cause excessive CPU consumption and block processing of further requests in the same process. Applications using the Pages Router and App Router applications without Server Actions are not affected. This issue is fixed in versions 15.5.28 and 16.4.1.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-770"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3,
+            "redhat": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+              "V40Score": 8.2
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-94482",
+            "https://advisory.echohq.com/cve/CVE-2026-94482",
+            "https://github.com/vercel/next.js",
+            "https://github.com/vercel/next.js/releases/tag/v15.5.28",
+            "https://github.com/vercel/next.js/releases/tag/v16.4.1",
+            "https://github.com/vercel/next.js/security/advisories/GHSA-p3m5-59mp-jv5r",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-94482",
+            "https://www.cve.org/CVERecord?id=CVE-2026-94482"
+          ],
+          "PublishedDate": "2026-10-22T16:19:16.72Z",
+          "LastModifiedDate": "2026-10-30T19:20:19.39Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-94483",
+          "VendorIDs": [
+            "GHSA-cjq9-62q9-8jv4"
+          ],
+          "PkgID": "next@16.2.6",
+          "PkgName": "next",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/next@16.2.6",
+            "UID": "c1777bc824b1ffbf"
+          },
+          "InstalledVersion": "16.2.6",
+          "FixedVersion": "16.3.8",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-94483",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:ee4260447b2d43dc47bf32fd77aaebe537ec126efde9b796b2e925df8dbcfac9",
+          "Title": "next: Next.js: Information disclosure via SSRF in Image Optimization",
+          "Description": "Next.js is a React framework for building full-stack web applications. From 16.0.0 until 16.3.8, Image Optimization can follow attacker-controlled DNS resolution for a remote URL that matches images.remotePatterns, allowing the optimized image fetch to reach private IP addresses after the URL passes the allow-list check. Applications without images.remotePatterns are not affected. Administrators unable to upgrade should audit allow-listed hosts and avoid entries whose DNS records are not trusted. This issue is fixed in version 16.3.8.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-918"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3,
+            "nvd": 2,
+            "redhat": 1
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N",
+              "V40Vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N",
+              "V3Score": 6.5,
+              "V40Score": 8.3
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N",
+              "V3Score": 6.5
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+              "V3Score": 3.7
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-94483",
+            "https://advisory.echohq.com/cve/CVE-2026-94483",
+            "https://github.com/advisories/GHSA-cjq9-62q9-8jv4",
+            "https://github.com/vercel/next.js",
+            "https://github.com/vercel/next.js/commit/e002ad68bd676bb0ed0c87bb22e3590304763e0b",
+            "https://github.com/vercel/next.js/releases/tag/v16.3.8",
+            "https://github.com/vercel/next.js/security/advisories/GHSA-cjq9-62q9-8jv4",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-94483",
+            "https://www.cve.org/CVERecord?id=CVE-2026-94483"
+          ],
+          "PublishedDate": "2026-10-02T16:16:51.473Z",
+          "LastModifiedDate": "2026-10-06T17:17:27.837Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-45623",
+          "VendorIDs": [
+            "GHSA-6g55-p6wh-862q"
+          ],
+          "PkgID": "postcss@8.4.31",
+          "PkgName": "postcss",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/postcss@8.4.31",
+            "UID": "5af5e03cfb2823a0"
+          },
+          "InstalledVersion": "8.4.31",
+          "FixedVersion": "8.5.12",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-45623",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:0e1b9d17605c8ce7249db08164d979675b5a249e5e39225f5178e164237966a1",
+          "Title": "postcss: PostCSS: Information disclosure and denial of service via crafted CSS input",
+          "Description": "PostCSS takes a CSS file and provides an API to analyze and modify its rules by transforming the rules into an Abstract Syntax Tree. In versions 8.5.11 and prior, the PreviousMap parses the /*# sourceMappingURL=PATH */ comment from any CSS string passed to process() and dereferences PATH against the local filesystem with no scheme, allowlist, or traversal check. An attacker who controls the CSS input can cause the host process to read any file readable by Node and leak the first ~10 bytes of its content through the resulting JSON.parse SyntaxError message. The bug also yields a precise file-existence oracle and a controllable-read primitive that may be combined with large-file targets for DoS. The behaviour is triggered with PostCSS's default options — no from, no map, no plugins required — and is therefore reachable from any pipeline that runs untrusted CSS through PostCSS (CMS themes, user-uploaded styles, browser-extension/userstyle processors, build pipelines for third-party packages, blog comment renderers, etc.). This issue has been fixed in version 8.5.12.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-22",
+            "CWE-200"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3,
+            "nvd": 4,
+            "redhat": 2
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "V3Score": 7.5
+            },
+            "nvd": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:H",
+              "V3Score": 9.1
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "V3Score": 7.5
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-45623",
+            "https://advisory.echohq.com/cve/CVE-2026-45623",
+            "https://github.com/advisories/GHSA-6g55-p6wh-862q",
+            "https://github.com/postcss/postcss",
+            "https://github.com/postcss/postcss/commit/aaec7b78b3ce2792585b4b300ef1bd5dd5b3e8ad",
+            "https://github.com/postcss/postcss/commit/c64b7488d2731dfa16213739b42c34faf5a9eba3",
+            "https://github.com/postcss/postcss/releases/tag/8.5.12",
+            "https://github.com/postcss/postcss/security/advisories/GHSA-6g55-p6wh-862q",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-45623",
+            "https://www.cve.org/CVERecord?id=CVE-2026-45623"
+          ],
+          "PublishedDate": "2026-07-27T18:16:55.13Z",
+          "LastModifiedDate": "2026-08-07T00:13:41.957Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-73646",
+          "VendorIDs": [
+            "GHSA-r28c-9q8g-f849"
+          ],
+          "PkgID": "postcss@8.4.31",
+          "PkgName": "postcss",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/postcss@8.4.31",
+            "UID": "5af5e03cfb2823a0"
+          },
+          "InstalledVersion": "8.4.31",
+          "FixedVersion": "8.5.18",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-73646",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:39cfe627ef4fa2dfdfaa281cbf94040164e96131371cd3b99cc5fa1e5a817e80",
+          "Title": "postcss: PostCSS: Information disclosure via path traversal in source map auto-loading",
+          "Description": "PostCSS takes a CSS file and provides an API to analyze and modify its rules by transforming the rules into an Abstract Syntax Tree. Prior to 8.5.18, lib/previous-map.js loadMap() passes attacker-controlled sourceMappingURL values to join(dirname(opts.from), annotation), and loadFile() permits traversed or absolute .map paths, allowing untrusted CSS processed without map: false to disclose sourcesContent from arbitrary reachable .map files through result.map. This issue is fixed in version 8.5.18.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-22"
+          ],
+          "VendorSeverity": {
+            "ghsa": 3,
+            "redhat": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "V3Score": 7.5
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+              "V3Score": 7.5
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-73646",
+            "https://advisory.echohq.com/cve/CVE-2026-73646",
+            "https://github.com/postcss/postcss",
+            "https://github.com/postcss/postcss/commit/95663d3eb7ba26f4854dd19d3b4f4425760cf56c",
+            "https://github.com/postcss/postcss/releases/tag/8.5.18",
+            "https://github.com/postcss/postcss/security/advisories/GHSA-r28c-9q8g-f849",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-73646",
+            "https://www.cve.org/CVERecord?id=CVE-2026-73646"
+          ],
+          "PublishedDate": "2026-08-17T16:17:47.257Z",
+          "LastModifiedDate": "2026-09-18T20:05:53.723Z"
+        },
+        {
+          "VulnerabilityID": "GHSA-f88m-g3jw-g9cj",
+          "PkgID": "sharp@0.34.5",
+          "PkgName": "sharp",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/sharp@0.34.5",
+            "UID": "36f7a8e060fb957"
+          },
+          "InstalledVersion": "0.34.5",
+          "FixedVersion": "0.35.0",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://github.com/advisories/GHSA-f88m-g3jw-g9cj",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:7d7eb7c76b9543453ff82406b86fe747d14309ff76186dc299d2e209337a5ba3",
+          "Title": "sharp inherited vulnerabilities in libvips: CVE-2026-33327, CVE-2026-33328, CVE-2026-35590, CVE-2026-35591",
+          "Description": "### Impact\n\nA number of vulnerabilities, two rated as \"High\" severity using CVSSv4, have been discovered and fixed in the upstream libvips dependency.\n\nThose processing untrusted input with versions of sharp prior to 0.35.0 are affected.\n\n### Patches\n\n#### Using prebuilt binaries provided by sharp?\n\nMost people rely on the prebuilt binaries provided by sharp.\n\nPlease upgrade sharp to the latest version, currently 0.35.3, which provides libvips 8.18.3.\n\n#### Using a globally-installed libvips?\n\nPlease ensure you are using the latest libvips 8.18.3.\n\n### Workarounds\nAdd the following to your code to prevent sharp from decoding GIF, TIFF and VIPS images.\n```js\nsharp.block({ operation: [\"VipsForeignLoadNsgif\", \"VipsForeignLoadTiff\", \"VipsForeignLoadVips\"] });\n```",
+          "Severity": "HIGH",
+          "VendorSeverity": {
+            "ghsa": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:H/SC:N/SI:N/SA:N",
+              "V40Score": 7
+            }
+          },
+          "References": [
+            "https://advisory.echohq.com/cve/GHSA-f88m-g3jw-g9cj",
+            "https://github.com/advisories/GHSA-f88m-g3jw-g9cj",
+            "https://github.com/libvips/libvips/security/advisories/GHSA-2fcj-gj27-279x",
+            "https://github.com/libvips/libvips/security/advisories/GHSA-523x-vhfw-6r76",
+            "https://github.com/libvips/libvips/security/advisories/GHSA-jmwm-wc68-mhwm",
+            "https://github.com/libvips/libvips/security/advisories/GHSA-r98w-4fp7-m9c7",
+            "https://github.com/lovell/sharp",
+            "https://github.com/lovell/sharp/security/advisories/GHSA-f88m-g3jw-g9cj"
+          ],
+          "PublishedDate": "2026-07-21T22:07:17Z",
+          "LastModifiedDate": "2026-07-21T22:07:17Z"
+        },
+        {
+          "VulnerabilityID": "GHSA-rgj7-g3m4-5g8c",
+          "PkgID": "sharp@0.34.5",
+          "PkgName": "sharp",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/sharp@0.34.5",
+            "UID": "36f7a8e060fb957"
+          },
+          "InstalledVersion": "0.34.5",
+          "FixedVersion": "0.35.4",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://github.com/advisories/GHSA-rgj7-g3m4-5g8c",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:079b0f07642bdf74ec3847e178f104c213d072cae4a80caf84dba8f05ec57084",
+          "Title": "sharp: Vulnerabilities in libheif: GHSA-g89c-p67h-r497 and GHSA-2jg2-4ch7-h545",
+          "Description": "### Impact\nA number of vulnerabilities, two rated as \"Critical\" severity using CVSSv3, have been discovered and fixed in the upstream libheif dependency. These can lead to possible remote code execution (RCE) on glibc-based Linux when run under certain conditions.\n\nThe attack vector for these claims to be \"network\" however sharp does not provide any networking features so this vulnerability is down-rated to a \"High\" severity using CVSSv4 but please note its Subsequent System Impact.\n\nThose processing untrusted input with versions of sharp prior to 0.35.4 are affected.\n\n### Patches\n\n#### Using prebuilt binaries provided by sharp?\n\nMost people rely on the prebuilt binaries provided by sharp.\n\nPlease upgrade sharp to the latest version, currently 0.35.4, which provides libheif 1.23.2.\n\n#### Using a globally-installed libheif?\n\nPlease ensure you are using the latest libheif 1.23.2.\n\n### Workarounds\nAdd the following to your code to prevent sharp from decoding AVIF images.\n```js\nsharp.block({ operation: [\"VipsForeignLoadHeif\"] });\n```\n\nEnsure you are using a `node` executable binary compiled as a Position Independent Executable (PIE). Most Linux package managers already do this for protection against RCE however be warned that the \"official\" Node.js binaries do not.\n\n### References\n- [CVE-2026-84383](https://github.com/strukturag/libheif/security/advisories/GHSA-g89c-p67h-r497)\n- https://github.com/strukturag/libheif/security/advisories/GHSA-2jg2-4ch7-h545",
+          "Severity": "HIGH",
+          "VendorSeverity": {
+            "ghsa": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H",
+              "V40Score": 8.9
+            }
+          },
+          "References": [
+            "https://advisory.echohq.com/cve/GHSA-rgj7-g3m4-5g8c",
+            "https://github.com/advisories/GHSA-rgj7-g3m4-5g8c",
+            "https://github.com/lovell/sharp",
+            "https://github.com/lovell/sharp/releases/tag/v0.35.4",
+            "https://github.com/lovell/sharp/security/advisories/GHSA-rgj7-g3m4-5g8c",
+            "https://github.com/strukturag/libheif/security/advisories/GHSA-2jg2-4ch7-h545",
+            "https://github.com/strukturag/libheif/security/advisories/GHSA-g89c-p67h-r497"
+          ],
+          "PublishedDate": "2026-09-08T21:25:11Z",
+          "LastModifiedDate": "2026-09-08T21:25:11Z"
+        },
+        {
+          "VulnerabilityID": "GHSA-wq5f-xc86-pv6w",
+          "PkgID": "sharp@0.34.5",
+          "PkgName": "sharp",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/sharp@0.34.5",
+            "UID": "36f7a8e060fb957"
+          },
+          "InstalledVersion": "0.34.5",
+          "FixedVersion": "0.35.5",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://github.com/advisories/GHSA-wq5f-xc86-pv6w",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:b91c03d70d8843815f91a9aa93187c8c55b903600ca58789462433e208ae331a",
+          "Title": "sharp : Vulnerability in librsvg dependency CVE-2026-96889",
+          "Description": "### Impact\n\nA memory-related vulnerability has been discovered and fixed in the upstream librsvg dependency. When certain runtime-specific conditions apply, this vulnerability can lead to possible remote code execution (RCE) on glibc-based Linux.\n\n### Patches\n\n#### Using prebuilt binaries provided by sharp?\n\nMost people rely on the prebuilt binaries provided by sharp.\n\nPlease upgrade sharp to the latest version, currently 0.35.5, which provides librsvg 2.63.2.\n\n#### Using a globally-installed librsvg?\n\nPlease ensure you are using the latest librsvg 2.63.2.\n\n### Workarounds\n\nAdd the following to your code to prevent sharp from decoding SVG images.\n```js\nsharp.block({ operation: [\"VipsForeignLoadSvg\"] });\n```\n\nTo avoid RCE, ensure you are using a `node` executable binary compiled as a Position Independent Executable (PIE). Most Linux package managers already use this security-hardening feature however be warned that the \"official\" Node.js binaries do not.\n1",
+          "Severity": "HIGH",
+          "VendorSeverity": {
+            "ghsa": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V40Vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H",
+              "V40Score": 8.9
+            }
+          },
+          "References": [
+            "https://advisory.echohq.com/cve/GHSA-wq5f-xc86-pv6w",
+            "https://github.com/advisories/GHSA-wq5f-xc86-pv6w",
+            "https://github.com/lovell/sharp",
+            "https://github.com/lovell/sharp/commit/96de105d9d36ab04c76c2b78b97255171630d236",
+            "https://github.com/lovell/sharp/releases/tag/v0.35.5",
+            "https://github.com/lovell/sharp/security/advisories/GHSA-wq5f-xc86-pv6w",
+            "https://gitlab.gnome.org/GNOME/librsvg/-/work_items/1241",
+            "https://www.cve.org/CVERecord?id=CVE-2026-96889"
+          ],
+          "PublishedDate": "2026-10-06T13:43:57Z",
+          "LastModifiedDate": "2026-10-06T13:43:57Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-93749",
+          "VendorIDs": [
+            "GHSA-68fv-2mgg-jv7q"
+          ],
+          "PkgID": "source-map-js@1.2.1",
+          "PkgName": "source-map-js",
+          "PkgIdentifier": {
+            "PURL": "pkg:npm/source-map-js@1.2.1",
+            "UID": "11c7df9d64bc6918"
+          },
+          "InstalledVersion": "1.2.1",
+          "FixedVersion": "1.2.2",
+          "Status": "fixed",
+          "SeveritySource": "ghsa",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-93749",
+          "DataSource": {
+            "ID": "ghsa",
+            "Name": "GitHub Security Advisory npm",
+            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Anpm"
+          },
+          "Fingerprint": "sha256:d580b97d9d5a5afbbbd1add62934fb8d06b46270f556e5b1eff22ba0caf721c2",
+          "Title": "source-map-js: source-map-js: Denial of Service via malformed indexed source maps",
+          "Description": "source-map-js through 1.2.1 fails to validate the per-section offset line value in indexed source maps, allowing attackers to specify arbitrary numeric values. Attackers can supply extremely large offset line values that cause synchronous event loop blocking for extended periods, preventing the service from handling other requests.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-1284"
+          ],
+          "VendorSeverity": {
+            "amazon": 3,
+            "ghsa": 3,
+            "redhat": 3
+          },
+          "CVSS": {
+            "ghsa": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+              "V3Score": 7.5,
+              "V40Score": 8.7
+            },
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+              "V3Score": 7.5
+            }
+          },
+          "References": [
+            "https://access.redhat.com/security/cve/CVE-2026-93749",
+            "https://advisory.echohq.com/cve/CVE-2026-93749",
+            "https://github.com/7rulnik/source-map-js",
+            "https://github.com/7rulnik/source-map-js/blob/c1cd8904bb7bd0c7fb5879fcda48134d82a27934/lib/source-node.js#L115-L118",
+            "https://github.com/7rulnik/source-map-js/commit/cf7658058ceeaa8619d5ae0ec90be6905209d016",
+            "https://github.com/7rulnik/source-map-js/issues/76",
+            "https://github.com/7rulnik/source-map-js/pull/79",
+            "https://github.com/7rulnik/source-map-js/releases/tag/v1.2.2",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-93749",
+            "https://www.cve.org/CVERecord?id=CVE-2026-93749",
+            "https://www.vulncheck.com/advisories/source-map-js-through-1.2.1-event-loop-denial-of-service"
+          ],
+          "PublishedDate": "2026-09-18T18:18:33.48Z",
+          "LastModifiedDate": "2026-09-22T20:25:55.87Z"
+        }
+      ]
+    },
+    {
+      "Target": "Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 20,
+        "Failures": 0
+      }
+    }
+  ]
+}
