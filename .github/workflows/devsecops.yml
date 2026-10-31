@@ -359,6 +359,9 @@ jobs:
         printf ''# Deploy produção\nImagem: %s@%s\nURL: %s\nAcionado por: %s\nData UTC: %s\nExecução: %s/%s/actions/runs/%s\nAprovação:
         consultar deployment review do Environment producao na execução.\n'' "$IMAGE" "$DIGEST" "$DEPLOY_URL" "$GITHUB_ACTOR"
         "$(date -u +%FT%TZ)" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > reports/deploy-producao.md'
+    - name: Registrar estado da etapa 8 mesmo em bloqueio
+      if: always()
+      run: bash scripts/ci/registrar-producao.sh
     - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
       if: always()
       with:
