@@ -3,3 +3,7 @@ dist/
 .next/
 .wrangler/
 reports/
+# O workflow é YAML do GitHub Actions: o parser do Semgrep falha na chave `on:`
+# (que o YAML 1.1 lê como booleano) e gera "Internal matching error", fazendo
+# `--strict` retornar exit 2 mesmo com 0 achados. Não é código da aplicação.
+.github/workflows/
