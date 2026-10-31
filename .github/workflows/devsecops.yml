@@ -261,7 +261,33 @@ jobs:
 
         '
     - name: ZAP baseline (somente alvo efêmero da equipe)
-      run: bash scripts/ci/zap-baseline.sh http://127.0.0.1:3000 "$PWD/reports"
+      # Action oficial do projeto ZAP (referenciada no PDF). Ela cuida do
+      # usuário, do HOME e do diretório de trabalho do container, evitando o
+      # problema de escrita em /zap/wrk que quebrava a execução via docker run.
+      # fail_action: false porque o enunciado define o ZAP como informativo.
+      uses: zaproxy/action-baseline@de8ad967d3548d44ef623df22cf95c3b0baf8b25
+      with:
+        target: http://127.0.0.1:3000
+        docker_name: ghcr.io/zaproxy/zaproxy:2.17.0
+        rules_file_name: ""
+        cmd_options: "-m 1 -I"
+        allow_issue_writing: false
+        fail_action: false
+        artifact_name: ""
+    - name: Consolidar relatório do ZAP em reports/
+      if: always()
+      run: 'mkdir -p reports
+
+        for f in report_json.json report_html.html report_md.md; do
+          [ -f "$f" ] && mv "$f" "reports/$f"
+        done
+
+        ls -la reports/ || true
+
+        # Ausência de JSON significa execução incompleta, não ausência de alertas.
+        test -s reports/report_json.json || { echo "ZAP não gerou report_json.json"; exit 1; }
+
+        '
     - name: Logs e limpeza
       if: always()
       run: 'mkdir -p reports
