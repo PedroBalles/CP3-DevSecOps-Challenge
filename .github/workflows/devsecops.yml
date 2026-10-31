@@ -276,18 +276,7 @@ jobs:
         artifact_name: ""
     - name: Consolidar relatório do ZAP em reports/
       if: always()
-      run: 'mkdir -p reports
-
-        for f in report_json.json report_html.html report_md.md; do
-          [ -f "$f" ] && mv "$f" "reports/$f"
-        done
-
-        ls -la reports/ || true
-
-        # Ausência de JSON significa execução incompleta, não ausência de alertas.
-        test -s reports/report_json.json || { echo "ZAP não gerou report_json.json"; exit 1; }
-
-        '
+      run: bash scripts/ci/consolidar-zap.sh
     - name: Logs e limpeza
       if: always()
       run: 'mkdir -p reports
