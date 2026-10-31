@@ -2307,7 +2307,7 @@ export function createWorkdayTriageV2CompetencyEvidence(
   }));
 }
 
-const RADAR_OPTION_IDS = new Set(
+const RADAR_OPTION_IDS: ReadonlySet<string> = new Set(
   RADAR_QUESTION_OPTIONS.map((option) => option.id),
 );
 

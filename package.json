@@ -9,6 +9,9 @@
     "dev": "vinext dev",
     "build": "vinext build",
     "start": "vinext start",
+    "build:container": "next build --webpack",
+    "start:container": "node .next/standalone/server.js",
+    "test:ci": "node --test tests/rendered-html.test.mjs tests/devsecops.test.mjs",
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
     "test:browser": "node scripts/run-browser-tests.mjs",
     "test:all": "npm test && node scripts/run-browser-tests.mjs --skip-build",
@@ -17,13 +20,14 @@
   },
   "dependencies": {
     "drizzle-orm": "0.45.2",
-    "next": "16.2.6",
+    "next": "16.4.1",
     "react": "19.2.6",
     "react-dom": "19.2.6"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@cloudflare/vite-plugin": "1.37.1",
+    "@cloudflare/workers-types": "4.20260702.1",
     "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "4.2.1",
     "@types/node": "22.19.19",
@@ -33,7 +37,7 @@
     "@vitejs/plugin-rsc": "0.5.26",
     "drizzle-kit": "0.31.10",
     "eslint": "9.39.4",
-    "eslint-config-next": "16.2.6",
+    "eslint-config-next": "16.4.1",
     "react-server-dom-webpack": "19.2.6",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",
@@ -41,5 +45,13 @@
     "vite": "8.0.13",
     "wrangler": "4.92.0"
   },
-  "type": "module"
+  "type": "module",
+  "overrides": {
+    "postcss": "8.5.32",
+    "nanoid": "3.3.18",
+    "source-map-js": "1.2.2",
+    "sharp": "0.35.5",
+    "baseline-browser-mapping": "2.11.34",
+    "image-size": "2.0.4"
+  }
 }

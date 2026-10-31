@@ -781,8 +781,9 @@ function isRadarAttempt(value: unknown): boolean {
 }
 
 function isTeamChallengeResult(value: unknown): boolean {
+  if (!isRecord(value)) return false;
+  const competencyScores = value.competencyScores;
   return (
-    isRecord(value) &&
     isFiniteNumber(value.score) &&
     value.score >= 0 &&
     value.score <= 100 &&
@@ -792,12 +793,12 @@ function isTeamChallengeResult(value: unknown): boolean {
     (value.totalDecisions as number) > 0 &&
     Number.isInteger(value.falsePositives) &&
     (value.falsePositives as number) >= 0 &&
-    isRecord(value.competencyScores) &&
+    isRecord(competencyScores) &&
     ["observar", "verificar", "decidir"].every(
       (competencyId) =>
-        isFiniteNumber(value.competencyScores[competencyId]) &&
-        (value.competencyScores[competencyId] as number) >= 0 &&
-        (value.competencyScores[competencyId] as number) <= 100,
+        isFiniteNumber(competencyScores[competencyId]) &&
+        (competencyScores[competencyId] as number) >= 0 &&
+        (competencyScores[competencyId] as number) <= 100,
     ) &&
     Array.isArray(value.coveredCompetencyIds) &&
     value.coveredCompetencyIds.every((item) =>
@@ -1125,7 +1126,7 @@ function isSectorAggregate(value: unknown): boolean {
     value.coveredCompetencyIds.every(
       (item) =>
         COMPETENCIES.has(item as string) &&
-        value.requiredCompetencyIds.includes(item),
+        (value.requiredCompetencyIds as unknown[]).includes(item),
     )
   );
 }
@@ -1195,7 +1196,11 @@ function isValidState(value: unknown): value is AppState {
       isActivityProgress(progress) &&
       isRecord(progress) &&
       (!progress.lastAttemptId ||
-        Object.prototype.hasOwnProperty.call(attempts, progress.lastAttemptId)),
+        (typeof progress.lastAttemptId === "string" &&
+          Object.prototype.hasOwnProperty.call(
+            attempts,
+            progress.lastAttemptId,
+          ))),
   );
   const claimsAreValid = Object.entries(rewardClaims).every(
     ([claimKey, claim]) =>
@@ -1221,6 +1226,7 @@ function isValidState(value: unknown): value is AppState {
       (evidence) =>
         isCompetencyEvidence(evidence) &&
         isRecord(evidence) &&
+        typeof evidence.attemptId === "string" &&
         Object.prototype.hasOwnProperty.call(attempts, evidence.attemptId),
     );
   const teamContributionsAreValid =
@@ -1313,6 +1319,7 @@ function isValidState(value: unknown): value is AppState {
       onboarding.tutorial.status === "inProgress" ||
       onboarding.tutorial.status === "completed") &&
     Number.isInteger(onboarding.tutorial.currentStep) &&
+    typeof onboarding.tutorial.currentStep === "number" &&
     onboarding.tutorial.currentStep >= 0 &&
     onboarding.tutorial.currentStep <= 6 &&
     (onboarding.tutorial.completedAt === null ||
