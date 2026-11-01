@@ -331,38 +331,13 @@ jobs:
         RENDER_SERVICE_ID: ${{ vars.RENDER_SERVICE_ID }}
         IMAGE: ${{ needs.docker-build.outputs.image }}
         DIGEST: ${{ needs.docker-build.outputs.digest }}
-      run: 'mkdir -p reports
-
-        IMAGE_URL="$IMAGE@$DIGEST"
-
-        echo "Imagem: $IMAGE_URL"
-
-        curl -sS -X POST "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys"
-        \ -H "Authorization: Bearer $RENDER_API_KEY" \ -H "Content-Type: application/json"
-        \ -d "{\"imageUrl\":\"$IMAGE_URL\"}" \ -o reports/render-deploy.json --fail-with-body
-
-        jq -r "\"deploy id: \(.id) | status: \(.status)\"" reports/render-deploy.json
-
-        '
+      run: 'bash scripts/ci/deploy-render.sh'
     - name: Health check e confirmação de revisão
       env:
         DEPLOY_URL: ${{ vars.DEPLOY_URL }}
         IMAGE: ${{ needs.docker-build.outputs.image }}
         DIGEST: ${{ needs.docker-build.outputs.digest }}
-      run: 'mkdir -p reports
-
-        curl --fail --retry 40 --retry-all-errors --retry-delay 15 "$DEPLOY_URL/api/health"
-        -o reports/health.json
-
-        python3 -c ''import json,os; d=json.load(open("reports/health.json")); assert
-        d.get("status")=="ok" and d.get("revision")==os.environ["GITHUB_SHA"], "Revisão
-        servida difere do commit aprovado" ''
-
-        printf ''# Deploy produção (Render)\nProvedor: Render / plano Free\nImagem:
-        %s@%s\nURL: %s\nAcionado por: %s\nData UTC: %s\nExecução: %s/%s/actions/runs/%s\nAprovação:
-        consultar deployment review do Environment producao na execução.\n'' "$IMAGE"
-        "$DIGEST" "$DEPLOY_URL" "$GITHUB_ACTOR" "$(date -u +%FT%TZ)" "$GITHUB_SERVER_URL"
-        "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > reports/deploy-producao.md'
+      run: 'bash scripts/ci/verificar-producao.sh'
 
   resumo:
     name: ★ Resumo da Esteira (sempre)
