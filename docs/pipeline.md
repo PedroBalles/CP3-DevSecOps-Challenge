@@ -3,11 +3,11 @@
 ## Escopo e rastreabilidade
 
 Aplicação: **Casa Digital Segura**, plataforma gamificada de conscientização sobre phishing.
-Fonte: https://github.com/TiagoLouzaPetagna/Challenge-Leroy
-Base analisada: `82a7d12293ced7c32dc90e119f2093d0ccb07b18`.
+Repositório da entrega: https://github.com/PedroBalles/CP3-DevSecOps-Challenge
+Commit da última execução completa: `2057159ee7baafbfa499f1f8fe7dc382a3814f39`.
 Requisitos: PDF “CP 03 - Pipeline DevSecOps”, páginas 3–13.
 
-Esta entrega implementa a configuração local. **Não representa uma execução concluída do Actions, publicação de imagem ou deploy.** Os registros reais estão em execucoes-actions.md, gerados a partir das execuções no GitHub Actions.
+As oito etapas executam no GitHub Actions. A execução **#23** concluiu 8/8 com aprovação humana registrada e deploy em produção em https://cp3-devsecops-challengeatsha256.onrender.com. Os registros reais estão em [execucoes-actions.md](evidencias/execucoes-actions.md).
 
 ## Fluxo
 

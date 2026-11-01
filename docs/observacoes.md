@@ -2,11 +2,8 @@
 
 ## Estado da entrega
 
-Código, esteira e documentação preparados sobre `82a7d12`, com execuções locais reais
-registradas em [validacao-local.md](validacao-local.md). **Ainda não há execução no
-GitHub Actions, imagem no GHCR, aprovação de Environment nem deploy em produção** —
-esses pontos dependem das variables do Environment `producao` no Render, e estão marcados como
-pendentes nas seções abaixo. Nenhum print foi fabricado.
+Esteira completa em execução no GitHub Actions. A run **#23** (commit `2057159`) concluiu as 8 etapas com `success`, teve **aprovação humana registrada** no Environment `producao` e publicou a aplicação em produção. Execuções anteriores (#16, #17, #20, #21, #22) também fecharam 8/8. As sete falhas reais encontradas no caminho e suas correções estão registradas em
+[execucoes-actions.md](evidencias/execucoes-actions.md); as medições locais estão em [validacao-local.md](validacao-local.md). Nenhum resultado foi fabricado.
 
 ## Registro de achados
 
@@ -18,7 +15,7 @@ pendentes nas seções abaixo. Nenhum print foi fabricado.
 | 12 erros de TypeScript / build quebrado | `lib/state/persistence.ts`, `lib/domain/rules.ts`, `db/index.ts` | Defeito real de código | Narrowing perdido em closures, `Set` com tipo literal estreito, `env.DB` sem tipo | `tsc --noEmit`: 0 erros |
 | `@cloudflare/workers-types` ausente / build | `package.json`, `db/index.ts` | Defeito real de configuração | Peer opcional nunca instalado; adicionado fixado em `4.20260702.1` | `cloudflare:workers` resolve |
 | 5 CRITICAL + 14 HIGH / CVEs | `next@16.2.6`, `postcss`, `nanoid`, `source-map-js`, `sharp` | **Vulnerabilidades reais** | `next` → 16.4.1, `eslint-config-next` → 16.4.1, `overrides` fixando as transitivas | Trivy: 19 → **0** |
-| CSP `unsafe-inline` / risco residual | `next.config.ts` | Risco aceito **provisoriamente** | Mantido por compatibilidade de hidratação/estilos; requer nonce/hash | Pendente de ZAP real |
+| CSP `unsafe-inline` / risco residual | `next.config.ts` | Risco aceito, avaliado pelo revisor | Mantido por compatibilidade de hidratação/estilos; requer nonce/hash | ZAP: 0 High, 2 Medium, 3 Low; aprovado com ressalva |
 | Identidade recebida em header / severidade depende do uso | `app/chatgpt-auth.ts` | Risco arquitetural do template; não usado como autorização pela UI atual | Documentado limite do gateway; não habilitar login por header público | Necessária autenticação validada se rotas protegidas forem criadas |
 
 ### Gitleaks
@@ -56,7 +53,7 @@ resolvidas por upgrade — não por supressão. Vulnerabilidades sem correção 
 aparecendo na tabela completa, para avaliação do responsável. Versões fixadas são
 rastreáveis, **não sinônimo de versões sem CVE**.
 
-O scan da imagem (etapa 6) não foi executado: não há runtime de contêiner nesta máquina.
+O scan da imagem (etapa 6) foi executado no GitHub Actions e passou com 0 HIGH / 0 CRITICAL na [run #23](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41322728115). Localmente não há runtime de contêiner — foi por isso que as primeiras versões da imagem só revelaram problemas (npm empacotado, base Debian desatualizada) quando o scan rodou no Actions.
 
 #### Trivy e `npm audit` discordam — e os dois estão certos no próprio escopo
 
@@ -101,18 +98,19 @@ Baseline deve rodar somente em homologação própria, informativo quanto a aler
 Falha de scanner, falta de JSON ou ausência de alvo não são tratadas como sucesso.
 **Não há relatório ZAP real nesta entrega** — depende da etapa 5 (imagem) e de Docker.
 
-## Registro de decisão (preencher após a execução)
+## Registro de decisão
 
-- URL da execução completa: **pendente**.
-- Aprovador real: **pendente** (não confundir com quem acionou o workflow).
-- Data/hora e deployment review: **pendente**.
-- Relatórios consultados e justificativa para riscos aceitos: **pendente**.
-- URL produção: **pendente**.
-- Commit/digest promovidos: **pendente**.
+- URL da execução completa: https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41322728115 (run #23, commit `2057159`).
+- Aprovador real: **PedroBalles**, ambiente `producao`.
+- Data/hora: 2026-11-01, registrada no deployment review da run #23.
+- Relatórios consultados: artifacts `relatorio-01` a `relatorio-07` da mesma execução.
+- URL produção: https://cp3-devsecops-challengeatsha256.onrender.com
+- Commit promovido: `2057159ee7baafbfa499f1f8fe7dc382a3814f39`, deploy por digest da imagem no GHCR.
+- Riscos aceitos: CSP com `unsafe-inline` (compatibilidade de hidratação) e ZAP com 2 alertas Medium e 3 Low, avaliados pelo revisor antes da aprovação.
 
 ## Provedor de nuvem
 
-A versão inicial usava Azure App Service com OIDC. Foi descartado por exigir
+A versão inicial usava Azure App Service com OIDC. Foi descartado por exigir (conta paga e identidade federada), conforme registrado abaixo. Detalhe:
 cartão de crédito e configuração de identidade federada no Entra ID, sem ganho
 para o escopo avaliado. A etapa 8 foi reescrita para Render (plano Free, imagem
 pré-construída do GHCR), mantendo intactos o gate de aprovação humana, o deploy

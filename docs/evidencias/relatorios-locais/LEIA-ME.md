@@ -1,8 +1,9 @@
 # Relatórios locais reais
 
-Saídas **efetivamente geradas** nesta máquina, guardadas como evidência. Não são prints
-do GitHub Actions: a execução remota depende de push e ainda está pendente. Nenhum
-arquivo aqui foi editado à mão depois de gerado.
+Saídas **efetivamente geradas** nesta máquina, guardadas como evidência das medições
+locais. A execução no GitHub Actions já ocorreu e está registrada em
+`../execucoes-actions.md` — a run #23 fechou 8/8 com aprovação humana. Nenhum arquivo
+desta pasta foi editado à mão depois de gerado.
 
 | Arquivo | Origem | O que comprova |
 |---|---|---|

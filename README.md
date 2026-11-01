@@ -4,7 +4,7 @@
 
 Plataforma gamificada de conscientização sobre phishing para colaboradores da Leroy Merlin. Implementação da atividade **CP 03 — Pipeline DevSecOps** com GitHub Actions.
 
-> **Estado:** esteira completa e **8/8 etapas com sucesso** na [execução 41258247592](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41258247592), com **aprovação humana registrada** (PedroBalles, ambiente `producao`) e aplicação no ar em https://cp3-devsecops-challengeatsha256.onrender.com servindo o commit `53d7796`.
+> **Estado:** esteira completa e **8/8 etapas com sucesso** na [execução #23](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41322728115), com **aprovação humana registrada** (PedroBalles, ambiente `producao`) e aplicação no ar em https://cp3-devsecops-challengeatsha256.onrender.com servindo o commit `53d7796`.
 
 ## Integrantes
 
@@ -13,7 +13,6 @@ Plataforma gamificada de conscientização sobre phishing para colaboradores da 
 | Cauã Vitack | 566119 |
 | Erik Gunnar | 565107 |
 | Guilherme Pierre | 562402 |
-| Pedro Balles | 564283 |
 | Thiago Louzã | 562404 |
 
 ## Esteira
@@ -43,7 +42,7 @@ flowchart LR
 | 8 | Environment `producao`, aprovação e deploy no Render por digest | `relatorio-08-producao` |
 | ★ | Consolidação de status e contagens, inclusive em falha | `resumo-da-esteira` |
 
-**Relatórios mais recentes:** abrir [histórico da esteira](https://github.com/TiagoLouzaPetagna/Challenge-Leroy/actions/workflows/devsecops.yml), escolher a execução e baixar os artifacts acima. O link específico de cada artifact será inserido depois que existir uma execução real.
+**Relatórios mais recentes:** abrir o [histórico da esteira](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/workflows/devsecops.yml), escolher a execução e baixar os artifacts acima. A execução completa mais recente é a [#23](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41322728115) do commit `2057159`.
 
 ### Resultados medidos localmente
 
@@ -101,12 +100,12 @@ Não passar credenciais em ARG/ENV versionados ou comandos compartilhados. Porta
 
 ### Aprovação e produção — registro obrigatório
 
-- Execução completa bem-sucedida: **pendente** (depende das variables do Render).
-- Execução bloqueada e correção: **demonstrada localmente** — gate Semgrep exit 1 com `eval`, exit 0 após correção ([evidência](docs/validacao-local.md)); bloqueio no Actions ainda pendente.
-- Quem aprovou / data / relatórios consultados: **pendente**; fonte: deployment review do Environment `producao`.
-- URL de produção: **pendente**.
-- Imagem publicada / digest: **pendente** (sem runtime de contêiner no ambiente local).
-- Print do Resumo da Esteira: **pendente**; incluir somente após execução real.
+- Execução completa bem-sucedida: [run #23](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41322728115) — 8/8 etapas, commit `2057159`. Também 8/8 em #16, #17, #20, #21 e #22.
+- Execução bloqueada e correção: demonstrada no Actions em sete ocasiões — Trivy (35 HIGH), Docker (contexto de build), trivy-imagem (58 achados), ZAP (exit 3 e exit 2) e Semgrep (`--strict`). Cada uma foi corrigida na raiz. Registro em [execuções reais](docs/evidencias/execucoes-actions.md).
+- Quem aprovou / data: **PedroBalles**, ambiente `producao` (deployment review da run #23).
+- URL de produção: https://cp3-devsecops-challengeatsha256.onrender.com
+- Imagem publicada / digest: publicada no GHCR a cada execução; o digest exato de cada run está em `relatorio-05-docker-build`.
+- Resumo da Esteira: publicado como artifact `resumo-da-esteira` e na aba Summary de cada execução.
 
 ## Documentação
 

@@ -2,6 +2,41 @@
 
 Repositório: <https://github.com/PedroBalles/CP3-DevSecOps-Challenge>
 
+## Execução de referência — run #23, 8/8 com aprovação humana
+
+**Run [#23](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41322728115)** — commit `2057159`, disparada por `workflow_dispatch`,
+duração 6m13s, **12 artifacts**.
+
+| Etapa | Resultado |
+|---|---|
+| 1. Gitleaks | success — 0 segredos |
+| 2. Semgrep | success — 0 achados, 0 erros |
+| 3. Build / testes | success — 39 testes, typecheck limpo |
+| 4. Trivy SCA | success — 0 HIGH / 0 CRITICAL |
+| 5. Docker + GHCR | success — imagem por digest |
+| 6. Trivy imagem | success — 0 HIGH / 0 CRITICAL |
+| 7. Homologação + ZAP | success — 0 High, 2 Medium, 3 Low |
+| 8. Aprovação + produção | success — aprovada por PedroBalles no Environment `producao` |
+| ★ Resumo da Esteira | success — consolidado com as contagens reais |
+
+Produção verificada após a aprovação:
+
+```
+GET https://cp3-devsecops-challengeatsha256.onrender.com/api/health
+{"status":"ok","service":"casa-digital-segura","revision":"2057159ee7baafbfa499f1f8fe7dc382a3814f39"}
+```
+
+A revisão devolvida é idêntica ao commit aprovado — é o que o step
+`verificar-producao.sh` exige para liberar a etapa.
+
+**Consistência:** as runs #16, #17, #20, #21, #22 e #23 fecharam 8/8. Não é
+resultado de uma tentativa isolada.
+
+## Histórico do caminho até aqui
+
+As seções abaixo registram execuções anteriores, mantidas porque documentam as
+falhas reais encontradas e corrigidas — inclusive as que só apareceram no Actions.
+
 ## Execução completa com aprovação humana — 8/8
 
 **Run [41255845564](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41255845564)**

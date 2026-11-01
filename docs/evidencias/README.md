@@ -1,15 +1,22 @@
 # Evidências
 
-## Já disponível: execuções locais reais
+Execução completa 8/8 com aprovação humana: [https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41322728115](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41322728115)
+Aplicação em produção: https://cp3-devsecops-challengeatsha256.onrender.com
+
+
+## Disponível
 
 Os relatórios de [relatorios-locais](relatorios-locais/) foram gerados por execução real
 nesta máquina (Gitleaks, Semgrep, Trivy, typecheck, testes, lint) e estão versionados com
 origem e significado descritos no [LEIA-ME](relatorios-locais/LEIA-ME.md). Não são prints
 do GitHub Actions.
 
-## Pendente: prints da esteira remota
+## Prints da esteira remota
 
-Nada aqui foi fabricado. Adicionar somente após executar na conta do grupo:
+Execução completa disponível em:
+[run #23](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41322728115) — aba Summary e artifacts.
+
+Para o relatório escrito, os prints úteis são (todos obtíveis nessa execução):
 
 - `01-esteira-completa.png`: 8 etapas + resumo com sucesso e URL do run.
 - `02-gate-bloqueado.png`: execução do PR de demonstração bloqueada pelo Semgrep.
