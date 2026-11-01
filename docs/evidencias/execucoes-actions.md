@@ -2,57 +2,103 @@
 
 Repositório: <https://github.com/PedroBalles/CP3-DevSecOps-Challenge>
 
-Registro do que o Actions executou de fato. **7 das 8 etapas passam** com a configuração atual.
-A etapa 8 está bloqueada por falta das variables do Environment `producao` (Azure), o que é o
-comportamento correto do gate: sem credencial, não há deploy.
+## Execução completa com aprovação humana — 8/8
 
-## Execução de referência
+**Run [41255845564](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41255845564)**
+— commit `37269ca`, aprovada manualmente no Environment `producao`.
 
-Run: [41235024506](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41235024506)
-Commit: `757a19cc67f151ac4608423f1bca6e297a7cbf36`
-
-| Etapa | Resultado | Achados reportados |
+| Etapa | Resultado | Achados medidos |
 |---|---|---|
 | 1. Gitleaks | success | 0 segredos |
 | 2. Semgrep | success | 0 achados, 0 erros |
-| 3. Build / npm audit | success | 31 vulns (o high é dev-only) |
-| 4. Trivy SCA | success | 0 HIGH, 0 CRITICAL |
-| 5. Docker + GHCR | success | — |
-| 6. Trivy imagem | success | 0 HIGH, 0 CRITICAL |
+| 3. Build / npm audit | success | 39 testes; audit informativo: 1 high (dev) |
+| 4. Trivy SCA | success | 0 HIGH / 0 CRITICAL / 0 misconfig |
+| 5. Docker + GHCR | success | digest `sha256:62feed1b...` |
+| 6. Trivy imagem | success | 0 HIGH / 0 CRITICAL |
 | 7. Homologação + ZAP | success | 0 High, 2 Medium, 3 Low, 3 Info |
-| 8. Aprovação + produção | failure | variável `AZURE_CLIENT_ID` ausente |
+| 8. Aprovação + produção | success | deploy `dep-dbj8mfh42hec73cap0g0`, revisão `37269ca` |
+| ★ Resumo da Esteira | success | consolidado |
 
-Artifacts publicados nessa execução (10 no total):
+### Deploy real (etapa 8)
 
-`relatorio-01-gitleaks`, `relatorio-02-semgrep`, `relatorio-03-build`,
-`relatorio-04-trivy-sca`, `relatorio-05-docker-build`, `relatorio-06-trivy-image`,
-`relatorio-07-homologacao-zap`, `relatorio-08-producao`, `resumo-da-esteira`,
-`artefato-aplicacao-757a19c…`.
+```
+Plataforma: Render (plano free)
+URL:        https://cp3-devsecops-challengeatsha256.onrender.com
+Imagem:     ghcr.io/pedroballes/cp3-devsecops-challenge@sha256:62feed1b...
+Deploy id:  dep-dbj8mfh42hec73cap0g0
+Status:     live em ~40s
+Health:     {"status":"ok","revision":"37269ca7924b932f4a7eb512ff55d260e930d9f2"}
+```
 
-## Falhas encontradas e corrigidas durante a execução real
+O health check compara `revision` com `GITHUB_SHA`: a revisão servida é o commit
+aprovado, não apenas "algo que responde". Se o Render entregasse imagem antiga, a
+etapa falharia.
 
-Nenhuma destas aparecia em teste local — cada uma só se revelou no Actions:
+### Aprovação humana (evidência do controle)
 
-| # | Sintoma | Causa | Correção |
+O job 8 ficou em `waiting` até a aprovação manual no Environment `producao`
+(1 revisor obrigatório). O `autoDeploy` do Render foi desligado por API
+(`autoDeploy: no`) para que nenhum push chegue em produção sem passar pelo gate.
+
+O deployment review fica registrado na própria execução, em
+"Review deployments" — fonte do nome do aprovador e do horário.
+
+## Histórico de falhas corrigidas durante a execução real
+
+Registro das falhas que só apareceram no Actions (nenhuma reproduzia em teste
+local), com a correção aplicada:
+
+| # | Falha | Causa | Correção |
 |---|---|---|---|
-| 1 | Etapa 4 falhou com 35 HIGH | Trivy com `--include-dev-deps` enxerga dev; meu scan local não usava a flag | `overrides` de 8 pacotes (`vite`, `undici`, `ws`, `js-yaml`, `brace-expansion`, `fast-uri`, `browserslist`, `image-size`) |
-| 2 | Etapa 5 falhou no build da imagem | `.dockerignore` excluía `.openai/`, importado por `vite.config.ts` | exceção `!.openai/hosting.json` |
-| 3 | Etapa 6 falhou com 58 achados | base Debian desatualizada + npm empacotado no runtime | `apt-get upgrade` no estágio final e remoção do npm do runtime |
-| 4 | Etapa 7 falhou com exit 3 | ZAP não gravava o relatório via `docker run` manual | action oficial `zaproxy/action-baseline` |
-| 5 | Etapa 7 falhou de novo (exit 2) | YAML dobrou o `for` do step de consolidação em uma linha | script `scripts/ci/consolidar-zap.sh` |
-| 6 | Etapa 2 falhou com 0 achados | `--strict` retorna 2 por `Internal matching error` no próprio workflow (`on:` lido como booleano) | `.github/workflows/` no `.semgrepignore` |
-| 7 | Etapa 8 sem artifact | `if-no-files-found: error` com `reports/` vazio | `scripts/ci/registrar-producao.sh` grava o estado mesmo em bloqueio |
+| 1 | Trivy 35 HIGH | CI usa `--include-dev-deps`; scan local não | 8 `overrides` de dependências |
+| 2 | Docker build quebrado | `.dockerignore` excluía `.openai/`, importado por `vite.config.ts` | exceção `!.openai/hosting.json` |
+| 3 | 58 achados na imagem | base Debian desatualizada + npm no runtime | `apt-get upgrade` e remoção do npm |
+| 4 | ZAP exit 3 | `docker run` manual não gravava relatório | action oficial `zaproxy/action-baseline` |
+| 5 | ZAP exit 2 | YAML dobrava um `for` em linha única | script `consolidar-zap.sh` |
+| 6 | Semgrep exit 2 com 0 achados | `--strict` falhava no `on:` do próprio workflow | `.github/workflows/` no `.semgrepignore` |
+| 7 | curl `401` + `Could not resolve host: reports` | YAML quebrou a continuação `\` do curl | scripts `deploy-render.sh` |
+| 8 | "revisão servida difere" | health check rodava antes do deploy ficar `live` | aguarda `status=live` na API do Render |
+| 9 | artifact da etapa 8 ausente | steps de relatório/upload perdidos em edição | restaurados |
 
-## Pendências para concluir
+O padrão que mais custou tempo: **YAML dobrando shell de múltiplas linhas**. Todo
+step com `\` de continuação virou script em `scripts/ci/`.
 
-1. Criar os Environments `homologacao` e `producao` em Settings → Environments.
-2. Em `producao`, exigir revisor (Required reviewers) — sem isso o YAML não impõe aprovação.
-3. Preencher as variables do Environment `producao`: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`,
-   `AZURE_SUBSCRIPTION_ID`, `AZURE_RESOURCE_GROUP`, `AZURE_WEBAPP_NAME`, `DEPLOY_URL`.
-4. Configurar identidade federada OIDC no Entra ID e conceder acesso ao Web App.
-5. Tornar o pacote do GHCR público para o Azure conseguir puxar a imagem.
-6. Rodar novamente e aprovar manualmente na revisão do deployment.
-7. Tirar os prints listados em [README](README.md) a partir dessa execução.
+## Pendências desta entrega
 
-Nada acima pode ser feito por token de API: Environments exigem permissão de
-`Administration` e o deploy exige credenciais Azure reais.
+- Prints em `docs/evidencias/` (pasta de imagens) ainda não foram anexados.
+- Execução com bloqueio proposital do Gitleaks em branch de teste: o gate foi
+  comprovado localmente (ver `validacao-local.md`), mas não há run pública do
+  bloqueio de segredo. A demonstração pública de bloqueio existe para o Semgrep.
+
+## Execução completa com aprovação humana — 41258247592
+
+Commit `53d7796` — **todas as 8 etapas com success**.
+
+| Etapa | Resultado | Achados |
+|---|---|---|
+| 1 Gitleaks | success | 0 segredos |
+| 2 Semgrep | success | 0 achados, 0 erros |
+| 3 Build / testes | success | 31 itens informativos no `npm audit` |
+| 4 Trivy SCA | success | 0 HIGH / 0 CRITICAL |
+| 5 Docker + GHCR | success | imagem por digest |
+| 6 Trivy imagem | success | 0 HIGH / 0 CRITICAL |
+| 7 Homologação + ZAP | success | 0 High, 2 Medium, 3 Low, 3 Info |
+| 8 Aprovação + produção | success | deploy no Render confirmado |
+
+**Aprovação registrada:** `PedroBalles` — estado `approved` — ambiente `producao`
+(consultado via API `/actions/runs/41258247592/approvals`).
+
+**Produção verificada ao vivo:**
+
+```json
+{"status":"ok","service":"casa-digital-segura","revision":"53d779681739e94ad1ff2ec6a5cdbd0aceb12fd5"}
+```
+
+O health check do próprio workflow compara a revisão servida com o `GITHUB_SHA`,
+então o deploy só passa se a imagem em produção for exatamente a do commit aprovado.
+
+**Artifacts publicados (12 entre relatórios e binários):** `relatorio-01` a
+`relatorio-08`, `resumo-da-esteira`, `artefato-aplicacao-53d7796`, `zap_scan` e o
+manifesto do buildx.
+
+Link: <https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41258247592>

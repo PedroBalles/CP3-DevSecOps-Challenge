@@ -4,7 +4,7 @@
 
 Plataforma gamificada de conscientização sobre phishing para colaboradores da Leroy Merlin. Implementação da atividade **CP 03 — Pipeline DevSecOps** com GitHub Actions.
 
-> **Estado:** esteira rodando no Actions. **7 das 8 etapas passam** na [execução 41235024506](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41235024506): Gitleaks, Semgrep, build, Trivy SCA, Docker/GHCR, Trivy imagem e ZAP. A etapa 8 (produção) está **bloqueada por falta das variables do Environment `producao`** — o gate funciona, falta a credencial do Render. Detalhes em [execuções reais](docs/evidencias/execucoes-actions.md).
+> **Estado:** esteira completa e **8/8 etapas com sucesso** na [execução 41258247592](https://github.com/PedroBalles/CP3-DevSecOps-Challenge/actions/runs/41258247592), com **aprovação humana registrada** (PedroBalles, ambiente `producao`) e aplicação no ar em https://cp3-devsecops-challengeatsha256.onrender.com servindo o commit `53d7796`.
 
 ## Integrantes
 
