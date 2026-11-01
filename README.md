@@ -13,6 +13,7 @@ Plataforma gamificada de conscientização sobre phishing para colaboradores da 
 | Cauã Vitack | 566119 |
 | Erik Gunnar | 565107 |
 | Guilherme Pierre | 562402 |
+| Pedro Balles | 564283 |
 | Thiago Louzã | 562404 |
 
 ## Esteira
