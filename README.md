@@ -10,9 +10,10 @@ Plataforma gamificada de conscientização sobre phishing para colaboradores da 
 
 | Nome | RM |
 |---|---|
-| A informar pela equipe | A informar |
-
-Esses dados não constavam no material fornecido. Cada integrante deve contribuir com commits próprios, conforme o enunciado; não foram inventados nomes, RMs ou autoria.
+| Cauã Vitack | 566119 |
+| Erik Gunnar | 565107 |
+| Guilherme Pierre | 562402 |
+| Thiago Louzã | 562404 |
 
 ## Esteira
 
