@@ -162,3 +162,26 @@ permite qualquer provedor; o que se avalia é o deploy real e rastreável.
 14. **Duração do pipeline remoto e taxa de falsos positivos ainda não foram medidas.**
     Após executar no Actions, registrar duração por job e ocorrências reais, sem atribuir
     medições à equipe antecipadamente.
+
+    # Observações e Análise Crítica da Esteira DevSecOps
+
+## Análise por Etapa
+
+### 1. Gitleaks (Verificação de Secrets)
+- **Achado:** Varredura realizada em todo o histórico do repositório (`fetch-depth: 0`).
+- **Ação Tomada:** Utilizado o arquivo `.gitleaksignore` para mascarar falsos positivos validados pela equipe.
+
+### 2. Semgrep (SAST)
+- **Achado:** Análise estática do código-fonte com foco em segurança (regras OWASP Top 10).
+- **Ação Tomada:** Correção de vulnerabilidades apontadas e documentação de supressões necessárias.
+
+### 3. Trivy (SCA e Image Scan)
+- **Achado:** Varredura de vulnerabilidades em dependências da aplicação e na imagem Docker.
+- **Ação Tomada:** Otimização do `Dockerfile` (multi-stage, atualização de pacotes do sistema e usuário não-root).
+
+## Lições Aprendidas
+1. A cultura *shift-left security* garante que falhas de segurança sejam detetadas logo no commit.
+2. O uso de quality gates impede automaticamente que códigos vulneráveis avancem.
+3. A automação com GitHub Actions padroniza a segurança do ciclo de vida do software.
+4. A documentação técnica detalhada é essencial para o rastreio de melhorias.
+5. O controlo de aprovação humana (*Required Reviewers*) é fundamental para o deploy seguro em produção.
